@@ -1,0 +1,3 @@
+package supermarket;
+
+@license(LGPL);

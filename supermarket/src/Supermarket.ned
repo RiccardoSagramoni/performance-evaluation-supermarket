@@ -1,0 +1,5 @@
+package supermarket;
+
+module Supermarket
+{
+}
