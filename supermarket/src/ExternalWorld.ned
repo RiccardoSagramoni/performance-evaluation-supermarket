@@ -9,6 +9,8 @@ simple ExternalWorld
         double service_mean = default(1);
         double service_std_deviation = default(1);   
         
+        bool logging = default(false);
+        
 	gates:
-        output out;
+		output out;
 }

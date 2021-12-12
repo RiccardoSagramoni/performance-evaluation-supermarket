@@ -3,22 +3,23 @@
 
 #include <omnetpp.h>
 
+#define ARRIVAL_RNG     0
+#define SERVICE_RNG     1
+
 using namespace omnetpp;
 
 class ExternalWorld : public cSimpleModule
 {
+    const bool logging = par("logging");
+
     // Distribution parameters
     const double arrival_mean = par("arrival_mean");
     const int service_distribution = par("service_distribution");
     const double service_mean = par("service_mean");
     const double service_std_deviation = par("service_std_deviation");
 
-    // RNG
-    const int ARRIVAL_RNG = 0;
-    const int SERVICE_RNG = 1;
-
     // Messages
-    cMessage* beep_;
+    cMessage* beep_ = nullptr;
 
     // Methods
     void generate_new_cart ();

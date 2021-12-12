@@ -36,7 +36,10 @@ void ExternalWorld::generate_new_cart ()
     // as a message containing the service time
     cMessage* msg = new cMessage(SIMTIME_STR(service_time));
     send(msg, "out");
-    EV << "EXTERNAL_WORLD: generated new cart (" << service_time << ")" << endl;
+
+    if (logging) {
+        EV << "EXTERNAL_WORLD: generated new cart (" << service_time << ")" << endl;
+    }
 }
 
 void ExternalWorld::wait_new_arrival ()
@@ -44,7 +47,10 @@ void ExternalWorld::wait_new_arrival ()
     // Wait for a random time, extracted from an exponential distribution
     simtime_t arrival_time = exponential(arrival_mean, ARRIVAL_RNG);
     scheduleAt(simTime() + arrival_time, beep_);
-    EV << "EXTERNAL_WORLD: next cart arrival in " << arrival_time << endl;
+
+    if(logging) {
+        EV << "EXTERNAL_WORLD: next cart arrival in " << arrival_time << endl;
+    }
 }
 
 
