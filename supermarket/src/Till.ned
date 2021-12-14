@@ -5,4 +5,9 @@ package supermarket;
 //
 simple Till
 {
+    parameters:
+        bool isQuick = default(false);
+    gates:
+        input in;
+        output out;
 }
