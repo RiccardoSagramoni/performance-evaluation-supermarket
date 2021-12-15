@@ -7,13 +7,14 @@ void Till::initialize()
 {
     under_service = false;
     timer_=new cMessage("beep");
+    responseTimeSignal=registerSignal("responseTime");
 }
 
 void Till::handleMessage(cMessage *msg)
 {
     //service time ends
     if(msg->isSelfMessage()){
-        print_EV("a job has been processed");
+        response_time();
         if(!queue.empty())
             process_job(NULL);
         else
@@ -32,6 +33,9 @@ void Till::handleMessage(cMessage *msg)
         else{
             queue.push(msg);
         }
+
+        //save the arrival time for this cart
+        responseT_queue.push(simTime().dbl());
     }
 }
 
@@ -52,5 +56,13 @@ void Till::process_job(cMessage* job){
 void Till::print_EV(const char* str){
     if(par("isQuick"))
             EV << "Quick Till["<<this->getId()<<"]: "<<str;
+    else
+            EV << "Standard Till["<<this->getId()<<"]: "<<str;
 
+}
+
+void Till::response_time(){
+    double time=(double)responseT_queue.front();
+    responseT_queue.pop();
+    emit(responseTimeSignal, (simtime_t)(simTime()-time));
 }
