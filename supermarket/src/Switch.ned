@@ -1,13 +1,13 @@
 package supermarket;
 
-simple ExternalWorld{
+simple Switch{
 	
 	parameters:
         
         int quick_checkout_threshold = default(10);
-        int percentage_quick_tills = default(0.2);
+        double percentage_quick_tills = default(0.2);
         int number_of_tills = default(10);
-        bool console_log = default(false);
+        bool logging = default(false);
         
 	gates:
 	    input in;

@@ -4,82 +4,65 @@ Define_Module(Switch);
 
 void Switch::initialize(){
 
-    beep_ = new cMessage("timer");
+    cModule *supermarket = getParentModule();
+    for(int i = 0; i<num_std_tills; i++){
+        cModule *standard_till = module->getSubmodule("standard_tills", i);
+        standard_tills.push_back((Till*)standard_till);
+    }
+    for(int i = 0; i<num_quick_tills; i++){
+        cModule *quick_till = module->getSubmodule("quick_tills", i);
+        quick_tills.push_back((Till*)quick_till);
+    }
+
 }
 
 void Switch::handleMessage(cMessage *msg){
 
-    // timeout? if we put it we should use a backlog?
-    cMessage *msg = receive();
-
-    if (msg==nullptr){
-
-        //handle error?
-    }
-    else if(msg->isSelfMessage()){
-
-        // togli una quantità equivalente di service time a quell'index
-    }
-    else{
-        if (dynamic_cast<simtime_t *>(msg) != nullptr){
-            simtime_t *service_time = (simtime_t *)msg;
-
-            if(console_log) {
-                EV << "SWITCH: new cart arrived" << service_time << endl;
-            }
-
-            receive_new_cart(service_time);
-        }
-    }
-}
-
-
-void Switch::cart_routing(simtime_t service_time){
-
-    int dimension = 0;
     int index = 0;
-    int selected_till_index = 0;
+    // extracting the service time of the cart
+    simtime_t *service_time = SimTime::parse(msg->getName());
 
-    if(service_time < percentage_quick_tills){
+    if(loggig) {
+        EV << "SWITCH: new cart arrived" << service_time << endl;
+    }
 
-        dimension = this->num_quick_tills;
-        index = this->index_quick;
+    // creation of the message to send to the right till
+    cMessage* msg = new cMessage(SIMTIME_STR(service_time));
+
+    // select of the right till, using the threshold as parameter
+    if(service_time < quick_checkout_threshold ){
+
+        index = selectTill(quick_tills);
     }
     else{
-        dimension = this->num_standard_tills;
-        index = 0;
-    }
 
+        index = selectTill(standard_tills);
+    }
 
     if(console_log) {
-        EV << "SWITCH: selecting the quick till with lowest response time" << endl;
+       EV << "SWITCH: selected the till with lowest response time" << endl;
     }
 
-    selected_till_index = getIndexTill(dimension,index);
-    this->tills[selected_till_index] += service_time;
+    // sending the message on the right till
+    send(msg, "out", index);
 
-    scheduleAt(simTime() + service_time, beep_);
-
-    cMessage* msg = new cMessage(SIMTIME_STR(service_time));
-    send(msg, "out[selected_till_index]");
-
-    if (console_log) {
-        EV << "SWITCH: cart (" << service_time << ") has been routed" << endl;
+    if(console_log) {
+        EV << "SWITCH: sent the cart to the till" << endl;
     }
-
 }
 
-int Switch::getIndexTill(int dimension, int index){
+int Switch::selectTill(vector<Till*> vect){
 
-    int min_index_responsetime_till= 0;
+    int index = 0;
 
-    for(int i=index; i< dimension-1; i++){
-        if(this->tills[i+1] < this->tills[i]){
-            min_index_responsetime_till = i+1;
+    for(int i = 0; i < vect.size()-1; i++){
+
+        if(vect[i+1]->get_number_of_job() < vect[i]->get_number_of_job()){
+            index = i+1;
         }
     }
 
-    return min_index_responsetime_till;
+    return index;
 }
 
 
