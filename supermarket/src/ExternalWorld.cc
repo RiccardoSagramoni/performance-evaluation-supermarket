@@ -45,7 +45,14 @@ void ExternalWorld::generate_new_cart ()
 void ExternalWorld::wait_new_arrival ()
 {
     // Wait for a random time, extracted from an exponential distribution
-    simtime_t arrival_time = exponential(arrival_mean, ARRIVAL_RNG);
+    simtime_t arrival_time;
+    if (arrival_distribution == 0) {
+        arrival_time = exponential(arrival_mean, ARRIVAL_RNG);
+    }
+    else {
+        arrival_time = arrival_mean;
+    }
+
     scheduleAt(simTime() + arrival_time, timer_);
 
     if(logging) {
