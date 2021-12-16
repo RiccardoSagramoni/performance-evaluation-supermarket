@@ -1,5 +1,4 @@
 #include "Till.h"
-#include <queue>
 
 Define_Module(Till);
 
@@ -15,10 +14,12 @@ void Till::handleMessage(cMessage *msg)
     //service time ends
     if(msg->isSelfMessage()){
         response_time();
-        if(!queue.empty())
-            process_job(NULL);
-        else
+        if(!queue.empty()){
+            process_job(nullptr);
+        }
+        else{
             under_service = false;
+        }
     }
 
     //new cart arrival
@@ -44,20 +45,22 @@ int Till::getNumberOfJobs(){
 }
 
 void Till::process_job(cMessage* job){
-    if (job == NULL){
+    if (job == nullptr){
         job = (cMessage*)this->queue.front();
         queue.pop();
     }
     under_service = true;
-    scheduleAt(simTime()+SimTime::parse(job->getClassName()), timer_);
+    scheduleAt(simTime()+SimTime::parse(job->getName()), timer_);
     delete(job);
 }
 
-void Till::print_EV(const char* str){
-    if(par("isQuick"))
-            EV << "Quick Till["<<this->getId()<<"]: "<<str;
-    else
-            EV << "Standard Till["<<this->getId()<<"]: "<<str;
+void Till::print_EV(std::string str){
+    if(par("is_quick")){
+            EV << "Quick Till["<<this->getId()<<"]: "<<str<<endl;
+    }
+    else{
+            EV << "Standard Till["<<this->getId()<<"]: "<<str<<endl;
+    }
 
 }
 

@@ -3,13 +3,29 @@ package supermarket;
 module Supermarket
 {
     parameters:
-        int p;
-        int n;
+        double p = default(1/7);
+        int n = default(7);
     gates:
         input in[n];
     submodules:
-        tills[n]: Till;
+        standard_tills[ceil((1-p) * n)]: Till;
+        quick_tills[floor(p * n)]: Till;
 }
+
+
+
+
+
+//module Supermarket
+//{
+//    parameters:
+//        double p = default(0.3);
+//        int n = default(10);
+//    gates:
+//        input in[n];
+//    submodules:
+//        tills[n]: Till;
+//}
 
 
 
