@@ -4,7 +4,7 @@ Define_Module(ExternalWorld);
 
 void ExternalWorld::initialize()
 {
-    beep_ = new cMessage("timer");
+    timer_ = new cMessage("timer");
 
     // Wait for first arrival
     wait_new_arrival();
@@ -46,7 +46,7 @@ void ExternalWorld::wait_new_arrival ()
 {
     // Wait for a random time, extracted from an exponential distribution
     simtime_t arrival_time = exponential(arrival_mean, ARRIVAL_RNG);
-    scheduleAt(simTime() + arrival_time, beep_);
+    scheduleAt(simTime() + arrival_time, timer_);
 
     if(logging) {
         EV << "EXTERNAL_WORLD: next cart arrival in " << arrival_time << endl;

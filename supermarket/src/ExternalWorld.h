@@ -19,7 +19,7 @@ class ExternalWorld : public cSimpleModule
     const double service_std_deviation = par("service_std_deviation");
 
     // Messages
-    cMessage* beep_ = nullptr;
+    cMessage* timer_ = nullptr;
 
     // Methods
     void generate_new_cart ();

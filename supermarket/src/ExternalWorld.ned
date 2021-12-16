@@ -5,7 +5,7 @@ simple ExternalWorld
 	parameters:
         // Distribution parameters
         double arrival_mean = default(1);
-        int service_distribution = default(1);
+        int service_distribution = default(1); // 0 exponential, 1 lognormal, else constant
         double service_mean = default(1);
         double service_std_deviation = default(1);   
         
