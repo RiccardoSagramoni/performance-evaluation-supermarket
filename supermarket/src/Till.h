@@ -7,24 +7,21 @@
 
 using namespace omnetpp;
 
-/**
- * TODO - Generated class
- */
 class Till : public cSimpleModule
 {
   std::queue <cMessage*> queue;
-  std::queue <double> responseT_queue;
-  bool under_service;
+  std::queue <simtime_t> start_time_queue; //indicates the
+  bool under_service; //indicates if the till is currently serving a job
   cMessage* timer_;
   simsignal_t responseTimeSignal;
+  void process_job(cMessage* job);
+  void print_EV(std::string str);
+  void response_time();
   protected:
     virtual void initialize();
     virtual void handleMessage(cMessage *msg);
-    virtual void process_job(cMessage* job);
-    virtual void print_EV(std::string str);
-    virtual void response_time();
   public:
-    int getNumberOfJobs();
+    int get_number_of_jobs();
 
 };
 

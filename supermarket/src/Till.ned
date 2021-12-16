@@ -9,6 +9,7 @@ simple Till
         @signal [responseTime];
         @statistic [responseTimeStat] (source="responseTime"; record=mean, vector);
         bool is_quick = default(false);
+        bool logging = default(false);
     gates:
         input in;
         output out;

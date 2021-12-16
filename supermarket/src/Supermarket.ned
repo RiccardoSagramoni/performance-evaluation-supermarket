@@ -3,8 +3,8 @@ package supermarket;
 module Supermarket
 {
     parameters:
-        double p = default(1/7);
-        int n = default(7);
+        double percentage_quick_tills = default(0.3);
+        int number_of_tills = default(10);
     gates:
         input in[n];
     submodules:

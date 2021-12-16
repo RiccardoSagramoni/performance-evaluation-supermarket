@@ -14,10 +14,10 @@ void Till::handleMessage(cMessage *msg)
     //service time ends
     if(msg->isSelfMessage()){
         response_time();
-        if(!queue.empty()){
+        if(!queue.empty()){         //queue is not empty, I serve the next job
             process_job(nullptr);
         }
-        else{
+        else{                       //queue is empty, Till is no longer serving
             under_service = false;
         }
     }
@@ -36,24 +36,37 @@ void Till::handleMessage(cMessage *msg)
         }
 
         //save the arrival time for this cart
-        responseT_queue.push(simTime().dbl());
+        start_time_queue.push(simTime());
     }
 }
 
-int Till::getNumberOfJobs(){
+//return the total number of job in the till
+int Till::get_number_of_jobs(){
     return queue.size() + under_service;
 }
 
+/*
+ * Process a job scheduling its service time:
+ * -If the job is specified by argument it means that the queue is empty and we are serving an arrival job.
+ * -If the job is NULL it means that it must be extracted from the queue.
+*/
 void Till::process_job(cMessage* job){
     if (job == nullptr){
         job = (cMessage*)this->queue.front();
         queue.pop();
     }
-    under_service = true;
-    scheduleAt(simTime()+SimTime::parse(job->getName()), timer_);
+    under_service = true; //the system is now serving a job
+    try{
+        scheduleAt(simTime()+SimTime::parse(job->getName()), timer_);
+    }catch(...){
+        if(par("logging")){
+            EV << "Parse Error, code must be checked";
+        }
+    }
     delete(job);
 }
 
+//print a generic event for the till
 void Till::print_EV(std::string str){
     if(par("is_quick")){
             EV << "Quick Till["<<this->getId()<<"]: "<<str<<endl;
@@ -64,8 +77,9 @@ void Till::print_EV(std::string str){
 
 }
 
+//Calculate the response time for the served job
 void Till::response_time(){
-    double time=(double)responseT_queue.front();
-    responseT_queue.pop();
+    simtime_t time = start_time_queue.front();
+    start_time_queue.pop();
     emit(responseTimeSignal, (simtime_t)(simTime()-time));
 }
