@@ -11,12 +11,12 @@ void Switch::initialize() {
     // and put it in the right vector
     for(int i = 0; i < num_std_tills; i++){
         cModule* standard_till = module->getSubmodule("standard_tills", i);
-        standard_tills.push_back((Till*)standard_till);
+        standard_tills.push_back(check_and_cast<Till*>(standard_till));
     }
 
     for(int i = 0; i < num_quick_tills; i++){
         cModule* quick_till = module->getSubmodule("quick_tills", i);
-        quick_tills.push_back((Till*)quick_till);
+        quick_tills.push_back(check_and_cast<Till*>(quick_till));
     }
 
 }

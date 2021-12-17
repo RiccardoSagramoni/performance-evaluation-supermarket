@@ -11,6 +11,6 @@ simple Switch{
         
 	gates:
 	    input in;
-		output standard_out[number_of_tills - floor(percentage_quick_tills - number_of_tills)];
-		output quick_out[floor(percentage_quick_tills - number_of_tills)];
+		output standard_out[];
+		output quick_out[];
 }
