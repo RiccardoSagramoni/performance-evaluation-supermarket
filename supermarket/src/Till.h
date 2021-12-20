@@ -14,6 +14,9 @@ class Till : public cSimpleModule
     bool under_service; //indicates if the till is currently serving a job
     cMessage* timer_;
     simsignal_t responseTimeSignal;
+    static unsigned int counter_id_quick;
+    static unsigned int counter_id_standard;
+    unsigned int id = 0;
 
     // Methods
     void process_job(cMessage* job);

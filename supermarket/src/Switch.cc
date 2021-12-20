@@ -26,7 +26,6 @@ void Switch::initialize() {
         cModule* quick_till = supermarket->getSubmodule("quick_tills", i);
         quick_tills.push_back(check_and_cast<Till*>(quick_till));
     }
-
 }
 
 void Switch::handleMessage(cMessage* msg) {
@@ -82,8 +81,8 @@ void Switch::handleMessage(cMessage* msg) {
  * @vect vector of the tills
  * @return the index of the till in the vector with the lowest number of job
  */
-unsigned int Switch::selectTill(std::vector<Till*> vect){
-    
+unsigned int Switch::selectTill(std::vector<Till*> vect)
+{
     if (vect.empty()) {
         throw "Error: vect can't be empty";
     }
@@ -91,15 +90,19 @@ unsigned int Switch::selectTill(std::vector<Till*> vect){
     unsigned int min_job = vect[0]->get_number_of_jobs();
     unsigned int min_job_index = 0;
 
-    for(int i = 1; i < vect.size() - 1; i++){
+    if (logging) {
+        EV << 0 << ": " << vect[0]->get_number_of_jobs()<<endl;
+    }
+
+    for(int i = 1; i < vect.size() ; i++){
         // compare each element with the next one
         if(vect[i]->get_number_of_jobs() < min_job){
             min_job_index = i;
             min_job = vect[i]->get_number_of_jobs();
 
-            if (logging) {
-                EV << i << ": " << vect[i]->get_number_of_jobs();
-            }
+        }
+        if (logging) {
+            EV << i << ": " << vect[i]->get_number_of_jobs() <<endl;
         }
     }
 
