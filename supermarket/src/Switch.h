@@ -9,8 +9,8 @@
 using namespace omnetpp;
 
 
-class Switch : public cSimpleModule {
-
+class Switch : public cSimpleModule
+{
     // Parameters for the till
     int number_of_tills = 0;
     double percentage_quick_tills = 0;

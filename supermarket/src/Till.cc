@@ -2,11 +2,20 @@
 
 Define_Module(Till);
 
+unsigned int Till::counter_id_standard = 0;
+unsigned int Till::counter_id_quick = 0;
+
 void Till::initialize()
 {
     under_service = false;
     timer_ = new cMessage("beep");
     responseTimeSignal = registerSignal("responseTime");
+    if(par("is_quick")){
+        id = counter_id_quick++;
+    }
+    else{
+        id = counter_id_standard++;
+    }
 }
 
 void Till::handleMessage(cMessage *msg)
@@ -73,10 +82,10 @@ void Till::process_job(cMessage* job){
 void Till::print_EV(std::string str){
     if (par("logging")) {
         if(par("is_quick")){
-            EV << "Quick Till["<<this->getId()<<"]: "<<str<<endl;
+            EV << "[Quick] Till["<<id<<"]: "<<str<<endl;
         }
         else{
-            EV << "Standard Till["<<this->getId()<<"]: "<<str<<endl;
+            EV << "[Standard] Till["<<id<<"]: "<<str<<endl;
         }
     }
 }
