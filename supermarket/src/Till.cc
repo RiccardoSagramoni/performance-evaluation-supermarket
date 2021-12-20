@@ -7,9 +7,9 @@ unsigned int Till::counter_id_quick = 0;
 
 void Till::initialize()
 {
-    under_service = false;
     timer_ = new cMessage("beep");
     responseTimeSignal = registerSignal("responseTime");
+
     if(par("is_quick")){
         id = counter_id_quick++;
     }
@@ -21,78 +21,64 @@ void Till::initialize()
 void Till::handleMessage(cMessage *msg)
 {
     //service time ends
-    if(msg->isSelfMessage()){
-        response_time();
+    if (msg->isSelfMessage()) {
+        record_response_time();
 
         std::string log = "Job has been served. Remaining jobs: " + std::to_string(queue.size());
         print_EV(log);
 
         if(!queue.empty()){         //queue is not empty, I serve the next job
-            process_job(nullptr);
-        }
-        else{                       //queue is empty, Till is no longer serving
-            under_service = false;
+            process_job();
         }
     }
-
     //new cart arrival
-    else{
-        //empty queue
-        if(queue.empty()){
-            process_job(msg);
-        }
-        //non-empty queue
-        else{
-            queue.push(msg);
-        }
+    else {
+        Cart* new_cart = new Cart{msg, simTime()};
 
-        //save the arrival time for this cart
-        start_time_queue.push(simTime());
+        queue.push(new_cart);
+
+        if(queue.size() == 1){
+            process_job();
+        }
     }
 }
 
 //return the total number of job in the till
-int Till::get_number_of_jobs(){
-    return queue.size() + under_service;
+unsigned int Till::get_number_of_jobs(){
+    return queue.size();
 }
 
-/*
- * Process a job scheduling its service time:
- * -If the job is specified by argument it means that the queue is empty and we are serving an arrival job.
- * -If the job is NULL it means that it must be extracted from the queue.
-*/
-void Till::process_job(cMessage* job){
-    if (job == nullptr){
-        job = (cMessage*)this->queue.front();
-        queue.pop();
-    }
-    under_service = true; //the system is now serving a job
-
-    try{
-        scheduleAt(simTime()+SimTime::parse(job->getName()), timer_);
-    }catch(...){
-        if(par("logging")){
-            EV << "Parse Error, code must be checked";
-        }
-    }
-    delete(job);
+/**
+ * Process a job (cart). It reads its service time from the queue and 
+ * schedules a timer according to the cart's service time
+ */
+void Till::process_job (){
+    Cart* cart = queue.front();
+    CartMessage* msg = check_and_cast<CartMessage*>(cart->message);
+    scheduleAt(simTime() + msg->getService_time(), timer_);
 }
 
-//print a generic event for the till
+// print a generic event for the till
 void Till::print_EV(std::string str){
     if (par("logging")) {
         if(par("is_quick")){
-            EV << "[Quick] Till["<<id<<"]: "<<str<<endl;
+            EV << "Quick Till[" << id << "]: " << str <<endl;
         }
         else{
-            EV << "[Standard] Till["<<id<<"]: "<<str<<endl;
+            EV << "Standard Till[" << id << "]: " << str <<endl;
         }
     }
 }
 
 //Calculate the response time for the served job
-void Till::response_time(){
-    simtime_t time = start_time_queue.front();
-    start_time_queue.pop();
-    emit(responseTimeSignal, (simtime_t)(simTime()-time));
+void Till::record_response_time()
+{
+    Cart* cart = queue.front();
+    queue.pop();
+    emit(responseTimeSignal, simTime() - cart->enter_queue_time);
+    delete cart;
 }
+
+
+
+
