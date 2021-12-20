@@ -4,22 +4,23 @@
 #include <omnetpp.h>
 #include <vector>
 #include <tgmath.h>
+#include "Till.h"
 
 using namespace omnetpp;
 
 
-class Switch : public cSimpleModule{
+class Switch : public cSimpleModule {
 
     // Parameters for the till
-    const int number_of_tills = par("number_of_tills");
-    const int percentage_quick_tills = par("percentage_quick_tills");
-    const int quick_checkout_threshold = par("quick_checkout_threshold");
+    int number_of_tills = 0;
+    int percentage_quick_tills = 0;
+    int quick_checkout_threshold = 0;
 
-    const int num_quick_tills = floor(number_of_tills * percentage_quick_tills);
-    const int num_std_tills = number_of_tills - num_quick_tills;
+    int num_quick_tills = 0;
+    int num_std_tills = 0;
     
     // Enable/disable logging
-    const bool logging = par("logging");
+    bool logging = false;
 
     // Pointers to the tills
     std::vector<Till*> quick_tills;

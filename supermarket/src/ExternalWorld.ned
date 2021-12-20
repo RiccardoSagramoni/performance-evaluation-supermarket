@@ -16,7 +16,6 @@ simple ExternalWorld
         int arrival_distribution = default(0); // 0 exponential else constant
         int service_distribution = default(0); // 0 exponential, 1 lognormal, else constant
         
-        
         // Enable/disable logging
         bool logging = default(false);
         

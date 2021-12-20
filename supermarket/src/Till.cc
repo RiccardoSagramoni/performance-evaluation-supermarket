@@ -5,8 +5,8 @@ Define_Module(Till);
 void Till::initialize()
 {
     under_service = false;
-    timer_=new cMessage("beep");
-    responseTimeSignal=registerSignal("responseTime");
+    timer_ = new cMessage("beep");
+    responseTimeSignal = registerSignal("responseTime");
 }
 
 void Till::handleMessage(cMessage *msg)
@@ -24,12 +24,10 @@ void Till::handleMessage(cMessage *msg)
 
     //new cart arrival
     else{
-
         //empty queue
         if(queue.empty()){
             process_job(msg);
         }
-
         //non-empty queue
         else{
             queue.push(msg);

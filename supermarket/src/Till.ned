@@ -1,8 +1,5 @@
 package supermarket;
 
-//
-// TODO auto-generated module
-//
 simple Till
 {
     parameters:
@@ -10,6 +7,7 @@ simple Till
         @statistic [responseTimeStat] (source="responseTime"; record=mean, vector);
         bool is_quick = default(false);
         bool logging = default(false);
+   
     gates:
         input in;
         output out;

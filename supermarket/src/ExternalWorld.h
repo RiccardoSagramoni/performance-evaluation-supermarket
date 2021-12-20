@@ -12,15 +12,15 @@ using namespace omnetpp;
 class ExternalWorld : public cSimpleModule
 {
     // Enable/disable logging
-    const bool logging = par("logging");
+    bool logging = false;
 
     // Distribution parameters
-    const double arrival_mean = par("arrival_mean");
-    const double service_mean = par("service_mean");
-    const double service_std_deviation = par("service_std_deviation");
+    double arrival_mean = 0;
+    double service_mean = 0;
+    double service_std_deviation = 0;
 
-    const int arrival_distribution = par("arrival_distribution");
-    const int service_distribution = par("service_distribution");
+    int arrival_distribution = 0;
+    int service_distribution = 0;
 
     // Messages
     cMessage* timer_ = nullptr;

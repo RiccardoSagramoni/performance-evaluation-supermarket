@@ -9,18 +9,22 @@ using namespace omnetpp;
 
 class Till : public cSimpleModule
 {
-  std::queue <cMessage*> queue;
-  std::queue <simtime_t> start_time_queue; //indicates the
-  bool under_service; //indicates if the till is currently serving a job
-  cMessage* timer_;
-  simsignal_t responseTimeSignal;
-  void process_job(cMessage* job);
-  void print_EV(std::string str);
-  void response_time();
-  protected:
+    std::queue <cMessage*> queue;
+    std::queue <simtime_t> start_time_queue; //indicates the
+    bool under_service; //indicates if the till is currently serving a job
+    cMessage* timer_;
+    simsignal_t responseTimeSignal;
+
+    // Methods
+    void process_job(cMessage* job);
+    void print_EV(std::string str);
+    void response_time();
+
+protected:
     virtual void initialize();
     virtual void handleMessage(cMessage *msg);
-  public:
+
+public:
     int get_number_of_jobs();
 
 };
