@@ -8,28 +8,33 @@
 
 using namespace omnetpp;
 
+struct Cart {
+    cMessage* message;
+    simtime_t enter_queue_time;
+};
+
 class Till : public cSimpleModule
 {
-    std::queue <cMessage*> queue;
-    std::queue <simtime_t> start_time_queue; //indicates the
-    bool under_service; //indicates if the till is currently serving a job
-    cMessage* timer_;
-    simsignal_t responseTimeSignal;
     static unsigned int counter_id_quick;
     static unsigned int counter_id_standard;
     unsigned int id = 0;
 
+    std::queue <Cart*> queue;
+
+    cMessage* timer_;
+    simsignal_t responseTimeSignal;
+
     // Methods
-    void process_job(cMessage* job);
+    void process_job();
     void print_EV(std::string str);
-    void response_time();
+    void record_response_time();
 
 protected:
     virtual void initialize();
     virtual void handleMessage(cMessage *msg);
 
 public:
-    int get_number_of_jobs();
+    unsigned int get_number_of_jobs();
 
 };
 
