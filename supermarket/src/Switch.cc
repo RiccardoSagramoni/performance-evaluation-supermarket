@@ -35,13 +35,17 @@ void Switch::handleMessage(cMessage* msg) {
     simtime_t service_time = SimTime::parse(msg->getName());
 
     if(logging) {
-        EV << "SWITCH: new cart arrived" << service_time << endl;
+        EV << "SWITCH: new cart arrived (" << service_time << ")" << endl;
     }
 
     // Select of the right till, using the threshold as parameter
 
     if (service_time < quick_checkout_threshold) { // Quick tills
         // Select index of the till with lowest number of job
+        if (logging) {
+            EV << "Select quick till..." << endl;
+        }
+
         unsigned int index = selectTill(quick_tills);
         if(logging) {
             EV << "SWITCH: selected the QUICK till with lowest response time: " << index << endl;
@@ -54,6 +58,10 @@ void Switch::handleMessage(cMessage* msg) {
         }
     }
     else { // Standard tills
+        if (logging) {
+            EV << "Select standard till..." << endl;
+        }
+
         // Select index of the till with lowest number of job
         unsigned int index = selectTill(standard_tills);
         if(logging) {
@@ -88,6 +96,10 @@ unsigned int Switch::selectTill(std::vector<Till*> vect){
         if(vect[i]->get_number_of_jobs() < min_job){
             min_job_index = i;
             min_job = vect[i]->get_number_of_jobs();
+
+            if (logging) {
+                EV << i << ": " << vect[i]->get_number_of_jobs();
+            }
         }
     }
 

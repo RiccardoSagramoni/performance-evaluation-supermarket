@@ -10,5 +10,4 @@ simple Till
    
     gates:
         input in;
-        output out;
 }

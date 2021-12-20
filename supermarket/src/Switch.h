@@ -13,7 +13,7 @@ class Switch : public cSimpleModule {
 
     // Parameters for the till
     int number_of_tills = 0;
-    int percentage_quick_tills = 0;
+    double percentage_quick_tills = 0;
     int quick_checkout_threshold = 0;
 
     int num_quick_tills = 0;

@@ -14,6 +14,10 @@ void Till::handleMessage(cMessage *msg)
     //service time ends
     if(msg->isSelfMessage()){
         response_time();
+
+        std::string log = "Job has been served. Remaining jobs: " + std::to_string(queue.size());
+        print_EV(log);
+
         if(!queue.empty()){         //queue is not empty, I serve the next job
             process_job(nullptr);
         }
@@ -54,6 +58,7 @@ void Till::process_job(cMessage* job){
         queue.pop();
     }
     under_service = true; //the system is now serving a job
+
     try{
         scheduleAt(simTime()+SimTime::parse(job->getName()), timer_);
     }catch(...){
@@ -66,13 +71,14 @@ void Till::process_job(cMessage* job){
 
 //print a generic event for the till
 void Till::print_EV(std::string str){
-    if(par("is_quick")){
+    if (par("logging")) {
+        if(par("is_quick")){
             EV << "Quick Till["<<this->getId()<<"]: "<<str<<endl;
-    }
-    else{
+        }
+        else{
             EV << "Standard Till["<<this->getId()<<"]: "<<str<<endl;
+        }
     }
-
 }
 
 //Calculate the response time for the served job

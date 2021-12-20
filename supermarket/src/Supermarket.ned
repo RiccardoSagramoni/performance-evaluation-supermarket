@@ -10,17 +10,17 @@ module Supermarket
         input in;
 
     submodules:
-        standard_tills[number_of_tills - floor(percentage_quick_tills * number_of_tills)]: Till;
-        quick_tills[floor(percentage_quick_tills * number_of_tills)]: Till;
+        standard_tills[number_of_tills - int(floor(percentage_quick_tills * number_of_tills))]: Till;
+        quick_tills[int(floor(percentage_quick_tills * number_of_tills))]: Till;
         switch: Switch;
         
     connections:
    		in --> switch.in;
    		for i=0..sizeof(quick_tills)-1 {
-      		switch.quick_out[i] --> quick_tills[i].in;
+      		switch.quick_out++ --> quick_tills[i].in;
 		}
 		for i=0..sizeof(standard_tills)-1 {
-	       	switch.standard_out[i] --> standard_tills[i].in;
+	       	switch.standard_out++ --> standard_tills[i].in;
 		}
 }
 
