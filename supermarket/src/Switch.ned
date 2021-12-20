@@ -1,7 +1,7 @@
 package supermarket;
 
-simple Switch{
-	
+simple Switch
+{
 	parameters:
         int quick_checkout_threshold = default(10);
         double percentage_quick_tills = default(0.2);

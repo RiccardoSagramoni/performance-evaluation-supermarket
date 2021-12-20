@@ -4,6 +4,14 @@ Define_Module(ExternalWorld);
 
 void ExternalWorld::initialize()
 {
+    // Initialize parameters
+    logging = par("logging");
+    arrival_mean = par("arrival_mean");
+    service_mean = par("service_mean");
+    service_std_deviation = par("service_std_deviation");
+    arrival_distribution = par("arrival_distribution");
+    service_distribution = par("service_distribution");
+
     timer_ = new cMessage("timer");
 
     // Wait for first arrival

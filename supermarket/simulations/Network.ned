@@ -14,4 +14,6 @@ network Network
         supermarket: Supermarket {
             @display("p=284,92");
         }
+    connections:
+        externalWorld.out --> supermarket.in;
 }
