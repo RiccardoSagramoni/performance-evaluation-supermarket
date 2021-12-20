@@ -4,6 +4,7 @@
 #include <omnetpp.h>
 #include <queue>
 #include <string>
+#include "CartMessage_m.h"
 
 using namespace omnetpp;
 

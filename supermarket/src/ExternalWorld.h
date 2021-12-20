@@ -2,6 +2,7 @@
 #define __SUPERMARKET_EXTERNALWORLD_H_
 
 #include <omnetpp.h>
+#include "CartMessage_m.h"
 
 // Index of the Random Number Generators
 #define ARRIVAL_RNG     0

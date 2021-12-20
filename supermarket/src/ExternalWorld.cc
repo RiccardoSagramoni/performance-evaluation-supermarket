@@ -42,7 +42,8 @@ void ExternalWorld::generate_new_cart ()
 
     // Send the new cart to the supermarket module,
     // as a message containing the service time
-    cMessage* msg = new cMessage(SIMTIME_STR(service_time));
+    CartMessage* msg = new CartMessage();
+    msg->setService_time(service_time);
     send(msg, "out");
 
     if (logging) {

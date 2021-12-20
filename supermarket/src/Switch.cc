@@ -1,5 +1,6 @@
 #include "Switch.h"
 
+
 Define_Module(Switch);
 
 void Switch::initialize() {
@@ -30,8 +31,9 @@ void Switch::initialize() {
 
 void Switch::handleMessage(cMessage* msg) {
 
+    CartMessage* cart = check_and_cast< CartMessage*>(msg);
     // extract the service time of the cart
-    simtime_t service_time = SimTime::parse(msg->getName());
+    simtime_t service_time = cart->getService_time();
 
     if(logging) {
         EV << "SWITCH: new cart arrived (" << service_time << ")" << endl;

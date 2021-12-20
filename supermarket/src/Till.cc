@@ -69,7 +69,8 @@ void Till::process_job(cMessage* job){
     under_service = true; //the system is now serving a job
 
     try{
-        scheduleAt(simTime()+SimTime::parse(job->getName()), timer_);
+        CartMessage* cart = check_and_cast< CartMessage*>(job);
+        scheduleAt(simTime()+cart->getService_time(), timer_);
     }catch(...){
         if(par("logging")){
             EV << "Parse Error, code must be checked";
