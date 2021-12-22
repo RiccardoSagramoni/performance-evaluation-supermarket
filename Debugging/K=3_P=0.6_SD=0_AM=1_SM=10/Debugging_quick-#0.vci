@@ -1,0 +1,83 @@
+file 683449 1640121376                                          
+version 2
+run Debugging_quick-0-20211221-22:16:05-7378
+attr configname Debugging_quick
+attr datetime 20211221-22:16:05
+attr experiment Debugging_quick
+attr inifile omnetpp.ini
+attr iterationvars ""
+attr iterationvarsf ""
+attr measurement ""
+attr network Network
+attr processid 7378
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 0
+attr seedset 0
+param **.percentage_quick_tills 0.6
+param **.quick_checkout_threshold 3
+param **.number_of_tills 10
+param *.externalWorld.arrival_mean 1
+param *.externalWorld.service_distribution 0
+param *.externalWorld.service_mean 10
+param *.externalWorld.service_std_deviation 1
+param **.logging true
+param **.quick_tills[*].is_quick true
+param **.standard_tills[*].is_quick false
+
+vector 0 Network.supermarket.standard_tills[0] number_of_jobs_stat:vector ETV
+attr source number_of_jobs
+vector 1 Network.supermarket.standard_tills[1] number_of_jobs_stat:vector ETV
+attr source number_of_jobs
+vector 2 Network.supermarket.standard_tills[2] number_of_jobs_stat:vector ETV
+attr source number_of_jobs
+vector 3 Network.supermarket.standard_tills[3] number_of_jobs_stat:vector ETV
+attr source number_of_jobs
+vector 4 Network.supermarket.quick_tills[0] number_of_jobs_stat:vector ETV
+attr source number_of_jobs
+vector 5 Network.supermarket.quick_tills[0] response_time_stat:vector ETV
+attr source response_time
+vector 6 Network.supermarket.standard_tills[0] response_time_stat:vector ETV
+attr source response_time
+vector 7 Network.supermarket.quick_tills[1] number_of_jobs_stat:vector ETV
+attr source number_of_jobs
+vector 8 Network.supermarket.quick_tills[1] response_time_stat:vector ETV
+attr source response_time
+vector 9 Network.supermarket.standard_tills[2] response_time_stat:vector ETV
+attr source response_time
+vector 10 Network.supermarket.standard_tills[3] response_time_stat:vector ETV
+attr source response_time
+vector 11 Network.supermarket.standard_tills[1] response_time_stat:vector ETV
+attr source response_time
+vector 12 Network.supermarket.quick_tills[2] number_of_jobs_stat:vector ETV
+attr source number_of_jobs
+vector 13 Network.supermarket.quick_tills[2] response_time_stat:vector ETV
+attr source response_time
+vector 14 Network.supermarket.quick_tills[3] number_of_jobs_stat:vector ETV
+attr source number_of_jobs
+vector 15 Network.supermarket.quick_tills[3] response_time_stat:vector ETV
+attr source response_time
+vector 16 Network.supermarket.quick_tills[4] number_of_jobs_stat:vector ETV
+attr source number_of_jobs
+vector 17 Network.supermarket.quick_tills[4] response_time_stat:vector ETV
+attr source response_time
+0	2594 77736 3 35502 0.795874504566 9995.097199420157 2640 0 1084 1397218 994093172
+1	80330 75388 6 35510 1.69443489305 9998.313317634407 2558 1 1084 1378103 985299155
+2	155718 77521 9 35485 2.950365651097 9991.214675213314 2633 0 1083 1408701 1011519865
+3	233239 77240 12 35499 4.809969863172 9993.485725922189 2625 1 1083 1377269 977526221
+4	310479 104194 15 35507 5.733192994643 9996.446751947151 3794 0 1 1897 1897
+5	414673 76548 16 35507 5.734336870868 9996.446751947151 1897 0.000969563115 2.999450324872 2697.4466105264 5284.0823300784
+6	491221 32175 17 35466 6.191932769685 9983.46558987601 778 3.600127478559 5807.6414940751 2189908.2958088 8338491154.8927
+7	523396 30601 33 35416 11.878958437775 9967.621406964164 1114 0 1 557 557
+8	553997 22473 49 35416 14.571998014538 9967.621406964164 557 0.005892749309 2.993791621849 788.59150102645 1529.3392953327
+9	576470 32046 50 35482 15.691618032696 9990.989339126442 775 4.239764788073 5744.694260827 2237600.145993 8660698911.2988
+10	608516 32654 96 35496 31.77474824264 9993.452083052464 771 15.967207972707 5844.6944968726 2148565.060743 8172424201.8512
+11	641170 31257 182 35492 60.421683502864 9992.705773655384 737 50.999530842547 5842.087850389 2178321.3872242 8392322981.4718
+12	672427 5405 316 35297 94.447039535792 9942.625407079706 190 0 1 95 95
+13	677832 3925 319 35297 95.208985966378 9942.625407079706 95 0.007646780889 2.962912084938 129.12575937672 242.78845482033
+14	681757 922 3585 33658 1011.130962814532 9490.295878908022 32 0 1 16 16
+15	682679 669 3593 33658 1013.709732836864 9490.295878908022 16 0.011154489971 2.82289091002 20.02113179776 36.238607401623
+16	683348 58 12045 12049 3460.659429190515 3461.061520954446 2 0 1 1 1
+17	683406 42 12049 12049 3461.061520954446 3461.061520954446 1 0.402091763931 0.402091763931 0.402091763931 0.16167778662114
+

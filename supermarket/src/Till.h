@@ -22,7 +22,8 @@ class Till : public cSimpleModule
     std::queue <Cart*> queue;
 
     cMessage* timer_;
-    simsignal_t responseTimeSignal;
+    simsignal_t response_time_signal;
+    int number_of_jobs_signal;
 
     // Methods
     void process_job();

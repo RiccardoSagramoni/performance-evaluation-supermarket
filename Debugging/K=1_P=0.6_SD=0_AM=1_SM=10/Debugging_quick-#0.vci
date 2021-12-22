@@ -1,0 +1,71 @@
+file 614825 1640121048                                          
+version 2
+run Debugging_quick-0-20211221-22:10:22-7071
+attr configname Debugging_quick
+attr datetime 20211221-22:10:22
+attr experiment Debugging_quick
+attr inifile omnetpp.ini
+attr iterationvars ""
+attr iterationvarsf ""
+attr measurement ""
+attr network Network
+attr processid 7071
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 0
+attr seedset 0
+param **.percentage_quick_tills 0.6
+param **.quick_checkout_threshold 1
+param **.number_of_tills 10
+param *.externalWorld.arrival_mean 1
+param *.externalWorld.service_distribution 0
+param *.externalWorld.service_mean 10
+param *.externalWorld.service_std_deviation 1
+param **.logging true
+param **.quick_tills[*].is_quick true
+param **.standard_tills[*].is_quick false
+
+vector 0 Network.supermarket.standard_tills[0] number_of_jobs_stat:vector ETV
+attr source number_of_jobs
+vector 1 Network.supermarket.standard_tills[1] number_of_jobs_stat:vector ETV
+attr source number_of_jobs
+vector 2 Network.supermarket.standard_tills[2] number_of_jobs_stat:vector ETV
+attr source number_of_jobs
+vector 3 Network.supermarket.standard_tills[3] number_of_jobs_stat:vector ETV
+attr source number_of_jobs
+vector 4 Network.supermarket.quick_tills[0] number_of_jobs_stat:vector ETV
+attr source number_of_jobs
+vector 5 Network.supermarket.quick_tills[0] response_time_stat:vector ETV
+attr source response_time
+vector 6 Network.supermarket.standard_tills[0] response_time_stat:vector ETV
+attr source response_time
+vector 7 Network.supermarket.standard_tills[2] response_time_stat:vector ETV
+attr source response_time
+vector 8 Network.supermarket.standard_tills[3] response_time_stat:vector ETV
+attr source response_time
+vector 9 Network.supermarket.standard_tills[1] response_time_stat:vector ETV
+attr source response_time
+vector 10 Network.supermarket.quick_tills[1] number_of_jobs_stat:vector ETV
+attr source number_of_jobs
+vector 11 Network.supermarket.quick_tills[1] response_time_stat:vector ETV
+attr source response_time
+vector 12 Network.supermarket.quick_tills[2] number_of_jobs_stat:vector ETV
+attr source number_of_jobs
+vector 13 Network.supermarket.quick_tills[2] response_time_stat:vector ETV
+attr source response_time
+0	2186 93768 3 34430 0.795874504566 9999.919037637938 3161 0 1354 2122593 1899167809
+1	95954 93592 6 34414 1.69443489305 9992.88410936132 3160 1 1354 2074306 1834429924
+2	189546 90997 9 34417 2.950365651097 9993.485725922189 3076 1 1354 2019330 1807980742
+3	280543 94761 12 34429 4.809969863172 9998.313317634407 3199 1 1353 2119006 1880951644
+4	375304 50196 15 34426 5.733192994643 9996.446751947151 1830 0 1 915 915
+5	425500 36884 16 34426 5.734336870868 9996.446751947151 915 0.000969563115 0.999571718501 442.73885567552 291.08491611275
+6	462384 37416 17 34430 6.191932769685 9999.919037637938 904 1.371085805931 5877.7411556111 2681347.639188 10483950060.825
+7	499800 35514 48 34402 15.691618032696 9990.589785519341 861 6.069973737314 6076.9068920449 2551562.5223214 10438744404.198
+8	535314 38143 94 34425 31.77474824264 9996.346406081736 923 19.858129483235 5891.1866530551 2639376.1779922 10072857149.574
+9	573457 37330 177 34398 60.421683502864 9988.067596609985 903 51.106827463745 5935.031542711 2568135.3826732 9833671327.7051
+10	610787 2283 347 33351 100.995594251944 9669.389407770495 80 0 1 40 40
+11	613070 1654 352 33351 101.868868579172 9669.389407770495 40 0.005892749309 0.982902847139 18.147264309246 11.859067095575
+12	614724 58 22754 22757 6699.831434489482 6700.509925237143 2 0 1 1 1
+13	614782 42 22757 22757 6700.509925237143 6700.509925237143 1 0.678490747661 0.678490747661 0.678490747661 0.46034969466158
+
