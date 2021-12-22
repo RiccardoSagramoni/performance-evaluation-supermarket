@@ -83,6 +83,31 @@ void Till::record_response_time()
     delete cart;
 }
 
+/**
+ * Overrides parent's finish method,
+ * in order to deallocate dynamic memory before recording statistics
+ */
+void Till::finish()
+{
+    if (this == timer_->getOwner()) {
+        EV << "Delete timer_" << endl;
+        delete timer_;
+    }
+
+    while (!queue.empty()) {
+        Cart* cart = queue.front();
+        queue.pop();
+        delete cart->message;
+        delete cart;
+    }
+
+    cSimpleModule::finish();
+}
+
+
+
+
+
 
 
 

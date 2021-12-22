@@ -69,6 +69,19 @@ void ExternalWorld::wait_new_arrival ()
     }
 }
 
+/**
+ * Overrides parent's finish method,
+ * in order to deallocate dynamic memory before recording statistics
+ */
+void ExternalWorld::finish()
+{
+    if (this == timer_->getOwner()) {
+        EV << "Delete timer_" << endl;
+        delete timer_;
+    }
+
+    cSimpleModule::finish();
+}
 
 
 

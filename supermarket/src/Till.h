@@ -33,6 +33,7 @@ class Till : public cSimpleModule
 protected:
     virtual void initialize();
     virtual void handleMessage(cMessage *msg);
+    virtual void finish();
 
 public:
     unsigned int get_number_of_jobs();
