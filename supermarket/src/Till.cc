@@ -8,7 +8,8 @@ unsigned int Till::counter_id_quick = 0;
 void Till::initialize()
 {
     timer_ = new cMessage("beep");
-    responseTimeSignal = registerSignal("responseTime");
+    response_time_signal = registerSignal("response_time");
+    number_of_jobs_signal = registerSignal("number_of_jobs");
 
     if(par("is_quick")){
         id = counter_id_quick++;
@@ -36,6 +37,7 @@ void Till::handleMessage(cMessage *msg)
         Cart* new_cart = new Cart{msg, simTime()};
 
         queue.push(new_cart);
+        emit(number_of_jobs_signal, queue.size());
 
         if(queue.size() == 1){
             process_job();
@@ -75,9 +77,36 @@ void Till::record_response_time()
 {
     Cart* cart = queue.front();
     queue.pop();
-    emit(responseTimeSignal, simTime() - cart->enter_queue_time);
+    emit(number_of_jobs_signal, queue.size());
+    emit(response_time_signal, simTime() - cart->enter_queue_time);
+    delete cart->message;
     delete cart;
 }
+
+/**
+ * Overrides parent's finish method,
+ * in order to deallocate dynamic memory before recording statistics
+ */
+void Till::finish()
+{
+    if (this == timer_->getOwner()) {
+        EV << "Delete timer_" << endl;
+        delete timer_;
+    }
+
+    while (!queue.empty()) {
+        Cart* cart = queue.front();
+        queue.pop();
+        delete cart->message;
+        delete cart;
+    }
+
+    cSimpleModule::finish();
+}
+
+
+
+
 
 
 

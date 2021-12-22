@@ -1,0 +1,89 @@
+file 4418554 1640122047                                         
+version 2
+run Debugging_quick-0-20211221-22:26:48-7967
+attr configname Debugging_quick
+attr datetime 20211221-22:26:48
+attr experiment Debugging_quick
+attr inifile omnetpp.ini
+attr iterationvars ""
+attr iterationvarsf ""
+attr measurement ""
+attr network Network
+attr processid 7967
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 0
+attr seedset 0
+param **.percentage_quick_tills 0.6
+param **.quick_checkout_threshold 30
+param **.number_of_tills 10
+param *.externalWorld.arrival_mean 1
+param *.externalWorld.service_distribution 0
+param *.externalWorld.service_mean 10
+param *.externalWorld.service_std_deviation 1
+param **.logging true
+param **.quick_tills[*].is_quick true
+param **.standard_tills[*].is_quick false
+
+vector 0 Network.supermarket.quick_tills[0] number_of_jobs_stat:vector ETV
+attr source number_of_jobs
+vector 1 Network.supermarket.standard_tills[0] number_of_jobs_stat:vector ETV
+attr source number_of_jobs
+vector 2 Network.supermarket.quick_tills[1] number_of_jobs_stat:vector ETV
+attr source number_of_jobs
+vector 3 Network.supermarket.quick_tills[2] number_of_jobs_stat:vector ETV
+attr source number_of_jobs
+vector 4 Network.supermarket.quick_tills[3] number_of_jobs_stat:vector ETV
+attr source number_of_jobs
+vector 5 Network.supermarket.quick_tills[3] response_time_stat:vector ETV
+attr source response_time
+vector 6 Network.supermarket.quick_tills[0] response_time_stat:vector ETV
+attr source response_time
+vector 7 Network.supermarket.standard_tills[1] number_of_jobs_stat:vector ETV
+attr source number_of_jobs
+vector 8 Network.supermarket.quick_tills[4] number_of_jobs_stat:vector ETV
+attr source number_of_jobs
+vector 9 Network.supermarket.quick_tills[5] number_of_jobs_stat:vector ETV
+attr source number_of_jobs
+vector 10 Network.supermarket.quick_tills[4] response_time_stat:vector ETV
+attr source response_time
+vector 11 Network.supermarket.quick_tills[1] response_time_stat:vector ETV
+attr source response_time
+vector 12 Network.supermarket.quick_tills[5] response_time_stat:vector ETV
+attr source response_time
+vector 13 Network.supermarket.quick_tills[2] response_time_stat:vector ETV
+attr source response_time
+vector 14 Network.supermarket.standard_tills[2] number_of_jobs_stat:vector ETV
+attr source number_of_jobs
+vector 15 Network.supermarket.standard_tills[0] response_time_stat:vector ETV
+attr source response_time
+vector 16 Network.supermarket.standard_tills[1] response_time_stat:vector ETV
+attr source response_time
+vector 17 Network.supermarket.standard_tills[2] response_time_stat:vector ETV
+attr source response_time
+vector 18 Network.supermarket.standard_tills[3] number_of_jobs_stat:vector ETV
+attr source number_of_jobs
+vector 19 Network.supermarket.standard_tills[3] response_time_stat:vector ETV
+attr source response_time
+0	2799 432040 3 188368 0.795874504566 49994.925462997035 13712 0 2062 14105800 19565608660
+1	434839 51498 6 188374 1.69443489305 49995.775243452411 1773 0 3 1267 1671
+2	486337 436198 9 188371 2.950365651097 49995.369674868662 13822 0 2062 14350801 19802879003
+3	922535 437554 12 188377 4.809969863172 49996.307415446433 13886 1 2062 14286905 19760280755
+4	1360089 439523 15 188384 5.733192994643 49999.057709457558 13926 0 2062 14529329 20191970843
+5	1799612 255019 16 188332 5.734336870868 49987.415320894809 5932 0.001143876225 12801.940498325 38540115.382021 333589072423.11
+6	2054631 250184 17 188333 6.191932769685 49987.689117321573 5825 0.968838725027 13202.255942866 38243002.7334 341716461608.9
+7	2304815 41378 27 188359 10.350903524712 49994.048910713976 1422 0 3 875 1051
+8	2346193 437027 33 188391 11.878958437775 49999.632706044254 13860 0 2062 14349478 19897397866
+9	2783220 440489 48 188388 14.330924238182 49999.483474689218 13977 0 2061 14363141 19876227273
+10	3223709 259324 49 188378 14.571998014538 49997.345825136852 5899 2.693039576763 13126.325505787 38471986.113134 339747819284.12
+11	3483033 258597 50 188347 15.691618032696 49992.794563193045 5880 2.608158499388 13424.597992568 37922723.482243 326078074843.22
+12	3741630 261901 59 188385 19.239695816047 49999.304027360928 5958 4.908771577865 13219.27392864 38345360.227349 336194701330.88
+13	4003531 259830 101 188354 31.77474824264 49993.811963515578 5912 13.182830947659 13122.623302147 38240635.437133 336200025612.26
+14	4263361 31036 159 188267 50.640502802749 49968.352109785361 1031 0 3 584 656
+15	4294397 38925 194 188355 60.421683502864 49993.840468494465 886 30.011943098351 137.81604469918 39897.558068727 2023195.8271799
+16	4333322 31278 279 188359 79.842046398078 49994.048910713976 711 30.047832126071 103.9583520563 29963.049631459 1355205.0674636
+17	4364600 22660 300 188215 85.14277367561 49956.798363611046 515 30.002850488627 104.03957982152 21448.908503127 957624.81427913
+18	4387260 18083 2712 188271 726.024581554692 49971.21724319422 600 0 2 332 364
+19	4405343 13210 2851 188271 762.810057602947 49971.21724319422 300 30.078654134328 104.43401214991 12284.224548767 538422.32369051
+

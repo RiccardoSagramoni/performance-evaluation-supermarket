@@ -1,0 +1,68 @@
+version 2
+run Debugging_quick-0-20211221-22:19:17-7555
+attr configname Debugging_quick
+attr datetime 20211221-22:19:17
+attr experiment Debugging_quick
+attr inifile omnetpp.ini
+attr iterationvars ""
+attr iterationvarsf ""
+attr measurement ""
+attr network Network
+attr processid 7555
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 0
+attr seedset 0
+param **.percentage_quick_tills 0.6
+param **.quick_checkout_threshold 15
+param **.number_of_tills 10
+param *.externalWorld.arrival_mean 1
+param *.externalWorld.service_distribution 0
+param *.externalWorld.service_mean 10
+param *.externalWorld.service_std_deviation 1
+param **.logging true
+param **.quick_tills[*].is_quick true
+param **.standard_tills[*].is_quick false
+
+scalar Network.supermarket.standard_tills[0] number_of_jobs_stat:mean 396.18077084206
+attr source number_of_jobs
+scalar Network.supermarket.standard_tills[0] response_time_stat:mean 7147.4237119313
+attr source response_time
+scalar Network.supermarket.standard_tills[1] number_of_jobs_stat:mean 392.31613976705
+attr source number_of_jobs
+scalar Network.supermarket.standard_tills[1] response_time_stat:mean 7013.345512618
+attr source response_time
+scalar Network.supermarket.standard_tills[2] number_of_jobs_stat:mean 390.88206954336
+attr source number_of_jobs
+scalar Network.supermarket.standard_tills[2] response_time_stat:mean 7055.9161101133
+attr source response_time
+scalar Network.supermarket.standard_tills[3] number_of_jobs_stat:mean 391.79272349272
+attr source number_of_jobs
+scalar Network.supermarket.standard_tills[3] response_time_stat:mean 6993.0666662881
+attr source response_time
+scalar Network.supermarket.quick_tills[0] number_of_jobs_stat:mean 1.0969110013926
+attr source number_of_jobs
+scalar Network.supermarket.quick_tills[0] response_time_stat:mean 8.6454560388393
+attr source response_time
+scalar Network.supermarket.quick_tills[1] number_of_jobs_stat:mean 0.98101777059774
+attr source number_of_jobs
+scalar Network.supermarket.quick_tills[1] response_time_stat:mean 8.06567270804
+attr source response_time
+scalar Network.supermarket.quick_tills[2] number_of_jobs_stat:mean 0.88430756038302
+attr source number_of_jobs
+scalar Network.supermarket.quick_tills[2] response_time_stat:mean 7.5117163707822
+attr source response_time
+scalar Network.supermarket.quick_tills[3] number_of_jobs_stat:mean 0.80796271427443
+attr source number_of_jobs
+scalar Network.supermarket.quick_tills[3] response_time_stat:mean 7.2665041531642
+attr source response_time
+scalar Network.supermarket.quick_tills[4] number_of_jobs_stat:mean 0.74470348373371
+attr source number_of_jobs
+scalar Network.supermarket.quick_tills[4] response_time_stat:mean 6.855569478539
+attr source response_time
+scalar Network.supermarket.quick_tills[5] number_of_jobs_stat:mean 0.7077246452969
+attr source number_of_jobs
+scalar Network.supermarket.quick_tills[5] response_time_stat:mean 6.7164010508681
+attr source response_time
+

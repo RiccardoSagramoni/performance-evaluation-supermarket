@@ -37,3 +37,5 @@ supermarket/src/supermarket_dbg
 supermarket/out/
 desktop.ini
 supermarket/.settings/
+**/results/
+
