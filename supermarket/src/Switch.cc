@@ -11,9 +11,19 @@ void Switch::initialize() {
     number_of_tills = par("number_of_tills");
     percentage_quick_tills = par("percentage_quick_tills");
     quick_checkout_threshold = par("quick_checkout_threshold");
+    logging = par("logging");
+
     num_quick_tills = floor(number_of_tills * percentage_quick_tills);
     num_std_tills = number_of_tills - num_quick_tills;
-    logging = par("logging");
+
+    if (number_of_tills <= 0 || num_quick_tills + num_std_tills != number_of_tills) {
+       error("initialize(): Tills doesn't exists");
+    }
+
+    if (percentage_quick_tills < 0 || percentage_quick_tills > 1) {
+        error("initialize(): percentage quick tills not valid");
+    }
+
 
     // accessing supermarket, that is the parent module
     cModule* supermarket = getParentModule();
@@ -43,7 +53,9 @@ void Switch::handleMessage(cMessage* msg) {
 
     // Select of the right till, using the threshold as parameter
 
-    if (service_time < quick_checkout_threshold) { // Quick tills
+    if (standard_tills.empty() ||
+            (!quick_tills.empty() && service_time < quick_checkout_threshold)){ // Quick tills
+
         // Select index of the till with lowest number of job
         if (logging) {
             EV << "Select quick till..." << endl;
@@ -60,7 +72,7 @@ void Switch::handleMessage(cMessage* msg) {
             EV << "SWITCH: send the cart to the QUICK till n." << index << endl;
         }
     }
-    else { // Standard tills
+    else if (!standard_tills.empty()){ // Standard tills
         if (logging) {
             EV << "Select standard till..." << endl;
         }
@@ -77,6 +89,9 @@ void Switch::handleMessage(cMessage* msg) {
             EV << "SWITCH: send the cart to the STANDARD till n." << index << endl;
         }
     }
+    else {
+        error("handleMessage(): no tills allocated");
+    }
 }
 
 /**
@@ -88,7 +103,7 @@ void Switch::handleMessage(cMessage* msg) {
 unsigned int Switch::selectTill(const std::vector<Till*>& vect, unsigned int& index)
 {
     if (vect.empty()) {
-        throw "Error: vect can't be empty";
+        error("selectTill(): vect can't be empty");
     }
 
     if(par("optimized_routing")){

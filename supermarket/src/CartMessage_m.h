@@ -19,7 +19,7 @@
 
 
 /**
- * Class generated from <tt>CartMessage.msg:17</tt> by nedtool.
+ * Class generated from <tt>CartMessage.msg:2</tt> by nedtool.
  * <pre>
  * message CartMessage
  * {

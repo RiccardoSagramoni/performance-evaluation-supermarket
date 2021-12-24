@@ -13,12 +13,12 @@ using namespace omnetpp;
 class Switch : public cSimpleModule
 {
     // Parameters for the till
-    int number_of_tills = 0;
+    unsigned int number_of_tills = 0;
     double percentage_quick_tills = 0;
-    int quick_checkout_threshold = 0;
+    unsigned int quick_checkout_threshold = 0;
 
-    int num_quick_tills = 0;
-    int num_std_tills = 0;
+    unsigned int num_quick_tills = 0;
+    unsigned int num_std_tills = 0;
     
     // Enable/disable logging
     bool logging = false;

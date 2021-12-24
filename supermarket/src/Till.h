@@ -17,13 +17,14 @@ class Till : public cSimpleModule
 {
     static unsigned int counter_id_quick;
     static unsigned int counter_id_standard;
+
     unsigned int id = 0;
 
     std::queue <Cart*> queue;
 
-    cMessage* timer_;
-    simsignal_t response_time_signal;
-    int number_of_jobs_signal;
+    cMessage* timer_ = nullptr;
+    simsignal_t response_time_signal = 0;
+    simsignal_t number_of_jobs_signal = 0;
 
     // Methods
     void process_job();
