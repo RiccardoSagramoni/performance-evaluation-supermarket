@@ -23,12 +23,16 @@ class Switch : public cSimpleModule
     // Enable/disable logging
     bool logging = false;
 
+    //counter of standard and quick tills
+    unsigned int count_quick = 0;
+    unsigned int count_standard = 0;
+
     // Pointers to the tills
     std::vector<Till*> quick_tills;
     std::vector<Till*> standard_tills;
 
     // Methods
-    unsigned int selectTill(std::vector<Till*> vect);
+    unsigned int selectTill(const std::vector<Till*>& vect, unsigned int& index);
 
 protected:
     virtual void initialize();

@@ -3,6 +3,8 @@
 
 Define_Module(Switch);
 
+//counter to select tills
+
 void Switch::initialize() {
 
     // Initialize parameters
@@ -47,7 +49,7 @@ void Switch::handleMessage(cMessage* msg) {
             EV << "Select quick till..." << endl;
         }
 
-        unsigned int index = selectTill(quick_tills);
+        unsigned int index = selectTill(quick_tills, count_quick);
         if(logging) {
             EV << "SWITCH: selected the QUICK till with lowest response time: " << index << endl;
         }
@@ -64,7 +66,7 @@ void Switch::handleMessage(cMessage* msg) {
         }
 
         // Select index of the till with lowest number of job
-        unsigned int index = selectTill(standard_tills);
+        unsigned int index = selectTill(standard_tills, count_standard);
         if(logging) {
             EV << "SWITCH: selected the STANDARD till with lowest response time: " << index << endl;
         }
@@ -83,32 +85,39 @@ void Switch::handleMessage(cMessage* msg) {
  * @vect vector of the tills
  * @return the index of the till in the vector with the lowest number of job
  */
-unsigned int Switch::selectTill(std::vector<Till*> vect)
+unsigned int Switch::selectTill(const std::vector<Till*>& vect, unsigned int& index)
 {
     if (vect.empty()) {
         throw "Error: vect can't be empty";
     }
 
-    unsigned int min_job = vect[0]->get_number_of_jobs();
-    unsigned int min_job_index = 0;
+    if(par("optimized_routing")){
+        unsigned int min_job = vect[0]->get_number_of_jobs();
+        unsigned int min_job_index = 0;
 
-    if (logging) {
-        EV << 0 << ": " << vect[0]->get_number_of_jobs()<<endl;
-    }
-
-    for(int i = 1; i < vect.size() ; i++){
-        // compare each element with the next one
-        if(vect[i]->get_number_of_jobs() < min_job){
-            min_job_index = i;
-            min_job = vect[i]->get_number_of_jobs();
-
-        }
         if (logging) {
-            EV << i << ": " << vect[i]->get_number_of_jobs() <<endl;
+            EV << 0 << ": " << vect[0]->get_number_of_jobs()<<endl;
         }
-    }
 
-    return min_job_index;
+        for(int i = 1; i < vect.size() ; i++){
+            // compare each element with the next one
+            if(vect[i]->get_number_of_jobs() < min_job){
+                min_job_index = i;
+                min_job = vect[i]->get_number_of_jobs();
+
+            }
+            if (logging) {
+                EV << i << ": " << vect[i]->get_number_of_jobs() <<endl;
+            }
+        }
+
+        return min_job_index;
+    }
+    else{
+        unsigned int temp = index;
+        index = (index+1) % vect.size();
+        return temp;
+    }
 }
 
 
