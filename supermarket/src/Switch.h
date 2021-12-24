@@ -17,15 +17,9 @@ class Switch : public cSimpleModule
     double percentage_quick_tills = 0;
     unsigned int quick_checkout_threshold = 0;
 
-    unsigned int num_quick_tills = 0;
-    unsigned int num_std_tills = 0;
     
     // Enable/disable logging
     bool logging = false;
-
-    //counter of standard and quick tills
-    unsigned int count_quick = 0;
-    unsigned int count_standard = 0;
 
     // Pointers to the tills
     std::vector<Till*> quick_tills;
