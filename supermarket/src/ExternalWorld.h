@@ -20,8 +20,8 @@ class ExternalWorld : public cSimpleModule
     double service_mean = 0;
     double service_std_deviation = 0;
 
-    int arrival_distribution = 0;
-    int service_distribution = 0;
+    unsigned int arrival_distribution = 0;
+    unsigned int service_distribution = 0;
 
     // Messages
     cMessage* timer_ = nullptr;

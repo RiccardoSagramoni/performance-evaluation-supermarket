@@ -7,7 +7,7 @@ unsigned int Till::counter_id_quick = 0;
 
 void Till::initialize()
 {
-    timer_ = new cMessage("beep");
+    timer_ = new cMessage("timer");
     response_time_signal = registerSignal("response_time");
     number_of_jobs_signal = registerSignal("number_of_jobs");
 

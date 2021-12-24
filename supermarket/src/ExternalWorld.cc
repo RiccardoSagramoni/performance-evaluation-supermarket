@@ -12,6 +12,10 @@ void ExternalWorld::initialize()
     arrival_distribution = par("arrival_distribution");
     service_distribution = par("service_distribution");
 
+    if (arrival_mean < 0 || service_mean < 0 || service_std_deviation < 0) {
+        error("initialize(): impossible distribution parameters");
+    }
+
     timer_ = new cMessage("timer");
 
     // Wait for first arrival

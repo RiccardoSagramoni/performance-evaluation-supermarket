@@ -13,12 +13,10 @@ using namespace omnetpp;
 class Switch : public cSimpleModule
 {
     // Parameters for the till
-    int number_of_tills = 0;
+    unsigned int number_of_tills = 0;
     double percentage_quick_tills = 0;
-    int quick_checkout_threshold = 0;
+    unsigned int quick_checkout_threshold = 0;
 
-    int num_quick_tills = 0;
-    int num_std_tills = 0;
     
     // Enable/disable logging
     bool logging = false;
@@ -28,7 +26,7 @@ class Switch : public cSimpleModule
     std::vector<Till*> standard_tills;
 
     // Methods
-    unsigned int selectTill(std::vector<Till*> vect);
+    unsigned int selectTill(const std::vector<Till*>& vect, unsigned int& index);
 
 protected:
     virtual void initialize();
