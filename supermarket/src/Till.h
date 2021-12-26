@@ -23,13 +23,17 @@ class Till : public cSimpleModule
     std::queue <Cart*> queue;
 
     cMessage* timer_ = nullptr;
-    simsignal_t response_time_signal = 0;
+
+    // Signals
     simsignal_t number_of_jobs_signal = 0;
+    simsignal_t number_of_jobs_queue_signal = 0;
+    simsignal_t response_time_signal = 0;
+    simsignal_t waiting_time_signal = 0;
 
     // Methods
     void process_job();
     void print_EV(std::string str);
-    void record_response_time();
+    void complete_job();
 
 protected:
     virtual void initialize();

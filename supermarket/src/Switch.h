@@ -26,7 +26,7 @@ class Switch : public cSimpleModule
     std::vector<Till*> standard_tills;
 
     // Methods
-    unsigned int selectTill(const std::vector<Till*>& vect, unsigned int& index);
+    unsigned int selectTill(const std::vector<Till*>& vect);
 
 protected:
     virtual void initialize();

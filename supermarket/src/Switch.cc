@@ -5,8 +5,8 @@ Define_Module(Switch);
 
 //counter to select tills
 
-void Switch::initialize() {
-
+void Switch::initialize()
+{
     // Initialize parameters
     number_of_tills = par("number_of_tills");
     percentage_quick_tills = par("percentage_quick_tills");
@@ -41,10 +41,10 @@ void Switch::initialize() {
     }
 }
 
-void Switch::handleMessage(cMessage* msg) {
-
+void Switch::handleMessage(cMessage* msg)
+{
     CartMessage* cart = check_and_cast< CartMessage*>(msg);
-    // extract the service time of the cart
+    // Extract the service time of the cart
     simtime_t service_time = cart->getService_time();
 
     if(logging) {
@@ -58,12 +58,12 @@ void Switch::handleMessage(cMessage* msg) {
 
         // Select index of the till with lowest number of job
         if (logging) {
-            EV << "Select quick till..." << endl;
+            EV << "SWITCH: select quick till..." << endl;
         }
 
         unsigned int index = selectTill(quick_tills);
         if(logging) {
-            EV << "SWITCH: selected the QUICK till with lowest response time: " << index << endl;
+            EV << "SWITCH: selected QUICK till " << index << endl;
         }
 
         // Send message
@@ -74,13 +74,13 @@ void Switch::handleMessage(cMessage* msg) {
     }
     else if (!standard_tills.empty()) { // Standard tills
         if (logging) {
-            EV << "Select standard till..." << endl;
+            EV << "SWITCH: select standard till..." << endl;
         }
 
         // Select index of the till with lowest number of job
         unsigned int index = selectTill(standard_tills);
         if(logging) {
-            EV << "SWITCH: selected the STANDARD till with lowest response time: " << index << endl;
+            EV << "SWITCH: selected STANDARD till " << index << endl;
         }
 
         // Send message

@@ -8,8 +8,12 @@ unsigned int Till::counter_id_quick = 0;
 void Till::initialize()
 {
     timer_ = new cMessage("timer");
-    response_time_signal = registerSignal("response_time");
+
     number_of_jobs_signal = registerSignal("number_of_jobs");
+    number_of_jobs_queue_signal= registerSignal("number_of_jobs_queue");
+    response_time_signal = registerSignal("response_time");
+    waiting_time_signal = registerSignal("waiting_time");
+
 
     if(par("is_quick")){
         id = counter_id_quick++;
@@ -23,7 +27,7 @@ void Till::handleMessage(cMessage *msg)
 {
     //service time ends
     if (msg->isSelfMessage()) {
-        record_response_time();
+        complete_job();
 
         std::string log = "Job has been served. Remaining jobs: " + std::to_string(queue.size());
         print_EV(log);
@@ -37,7 +41,9 @@ void Till::handleMessage(cMessage *msg)
         Cart* new_cart = new Cart{msg, simTime()};
 
         queue.push(new_cart);
+
         emit(number_of_jobs_signal, queue.size());
+        emit(number_of_jobs_queue_signal, queue.size()-1);
 
         if(queue.size() == 1){
             process_job();
@@ -46,7 +52,8 @@ void Till::handleMessage(cMessage *msg)
 }
 
 //return the total number of job in the till
-unsigned int Till::get_number_of_jobs(){
+unsigned int Till::get_number_of_jobs()
+{
     return queue.size();
 }
 
@@ -54,14 +61,19 @@ unsigned int Till::get_number_of_jobs(){
  * Process a job (cart). It reads its service time from the queue and 
  * schedules a timer according to the cart's service time
  */
-void Till::process_job (){
+void Till::process_job ()
+{
     Cart* cart = queue.front();
     CartMessage* msg = check_and_cast<CartMessage*>(cart->message);
     scheduleAt(simTime() + msg->getService_time(), timer_);
+
+    // Job enters in the server => record waiting time
+    emit(waiting_time_signal, simTime() - cart->enter_queue_time);
 }
 
 // print a generic event for the till
-void Till::print_EV(std::string str){
+void Till::print_EV(std::string str)
+{
     if (par("logging")) {
         if(par("is_quick")){
             EV << "Quick Till[" << id << "]: " << str <<endl;
@@ -73,12 +85,21 @@ void Till::print_EV(std::string str){
 }
 
 //Calculate the response time for the served job
-void Till::record_response_time()
+void Till::complete_job ()
 {
     Cart* cart = queue.front();
     queue.pop();
+
+    // Record statistics
     emit(number_of_jobs_signal, queue.size());
+    if (queue.size() > 0) {
+        emit(number_of_jobs_queue_signal, queue.size() - 1);
+    }
+    else {
+        emit(number_of_jobs_queue_signal, 0);
+    }
     emit(response_time_signal, simTime() - cart->enter_queue_time);
+
     delete cart->message;
     delete cart;
 }
