@@ -40,4 +40,4 @@ supermarket/.settings/
 **/.vscode/
 **/results/
 *.anf
-
+*.csv
