@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from scipy.stats import t
+from scipy.stats import norm
 import math
 import os.path
 
@@ -17,8 +17,15 @@ def weighted_avg_and_std(values, weights):
 
 
 def compute_confidence_interval(alpha, std, size):
-	t_crit = np.abs(t.ppf((1 - alpha) / 2, size - 1))
-	return std * t_crit / np.sqrt(size)
+	"""
+	Returns the confidence interval for a population mean, using a normal distribution.
+
+	Args:
+		alpha: The significance level used to compute the confidence level. The confidence level equals 100*(1 - alpha)%, or in other words, an alpha of 0.05 indicates a 95% confidence level.
+		std: The population standard deviation for the data range and is assumed to be known.
+		size: The sample size
+	"""
+	return std * norm.ppf(1-alpha/2) / np.sqrt(size)
 
 
 
@@ -54,7 +61,7 @@ for i in range (0, len(df.columns), 2):
 
 	# Compute mean and std
 	[mean, std] = weighted_avg_and_std(jobs[:-1], weights)
-	conf_int = compute_confidence_interval(0.99, std, len(jobs) - 1)
+	conf_int = compute_confidence_interval(0.01, std, len(jobs) - 1)
 	mean_list.append(mean)
 	std_list.append(std)
 	conf_list.append(conf_int)
