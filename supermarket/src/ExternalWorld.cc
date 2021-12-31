@@ -16,6 +16,26 @@ void ExternalWorld::initialize()
         error("initialize(): impossible distribution parameters");
     }
 
+    // Log current distribution
+    if (logging) {
+        if (arrival_distribution == 0) { // exponential
+            EV << "EXTERNAL_WORLD: exponential interarrival distribution" << endl;
+        }
+        else { // constant
+            EV << "EXTERNAL_WORLD: constant interarrival distribution" << endl;
+        }
+
+        if (service_distribution == 0) { // exponential
+            EV << "EXTERNAL_WORLD: exponential service distribution" << endl;
+        }
+        else if (service_distribution == 1){ // lognormal
+            EV << "EXTERNAL_WORLD: lognormal service distribution" << endl;
+        }
+        else { // constant
+            EV << "EXTERNAL_WORLD: constant service distribution" << endl;
+        }
+    }
+
     timer_ = new cMessage("timer");
 
     // Wait for first arrival
@@ -59,10 +79,10 @@ void ExternalWorld::wait_new_arrival ()
 {
     // Wait for a random time, extracted from an exponential distribution
     simtime_t arrival_time;
-    if (arrival_distribution == 0) {
+    if (arrival_distribution == 0) { // exponential
         arrival_time = exponential(arrival_mean, ARRIVAL_RNG);
     }
-    else {
+    else { // constant
         arrival_time = arrival_mean;
     }
 

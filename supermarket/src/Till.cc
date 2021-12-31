@@ -21,6 +21,10 @@ void Till::initialize()
     else{
         id = counter_id_standard++;
     }
+
+    // Record starting state
+    emit(number_of_jobs_signal, 0);
+    emit(number_of_jobs_queue_signal, 0);
 }
 
 void Till::handleMessage(cMessage *msg)
