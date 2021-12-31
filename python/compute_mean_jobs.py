@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 from scipy.stats import t
 import math
+import os.path
 
 def weighted_avg_and_std(values, weights):
     """
@@ -22,17 +23,12 @@ def compute_confidence_interval(alpha, std, size):
 
 
 
-
-
-
-
-df = pd.read_csv('results.csv', sep=';')
+df = pd.read_csv(os.path.join(os.path.dirname(__file__), 'results.csv'), sep=';')
 
 mean_list = []
 std_list = []
 conf_list = []
   
-#print(df)
 for i in range (0, len(df.columns), 2):
 	print("i: " + str(i/2))
 
@@ -68,4 +64,4 @@ csv_data['mean'] = mean_list
 csv_data['std'] = std_list
 csv_data['conf_int'] = conf_list
 data = pd.DataFrame(data=csv_data)
-data.to_csv("data.csv")
+data.to_csv(os.path.join(os.path.dirname(__file__), "data.csv"), sep=';')
