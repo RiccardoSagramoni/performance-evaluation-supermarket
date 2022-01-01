@@ -61,7 +61,7 @@ for i in range (0, len(df.columns), 2):
 
 	# Compute mean and std
 	[mean, std] = weighted_avg_and_std(jobs, weights)
-	conf_int = compute_confidence_interval(0.01, std, len(jobs))
+	conf_int = compute_confidence_interval(0.05, std, len(jobs))
 	mean_list.append(mean)
 	std_list.append(std)
 	conf_list.append(conf_int)
