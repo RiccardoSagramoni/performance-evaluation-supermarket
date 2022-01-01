@@ -25,12 +25,12 @@ def compute_confidence_interval(alpha, std, size):
 		std: The population standard deviation for the data range and is assumed to be known.
 		size: The sample size
 	"""
-	return std * norm.ppf(1-alpha/2) / np.sqrt(size)
+	return std * norm.ppf(1 - alpha/2) / np.sqrt(size)
 
 
 
 
-df = pd.read_csv(os.path.join(os.path.dirname(__file__), 'results.csv'), sep=';')
+df = pd.read_csv(os.path.join(os.path.dirname(__file__), 'input.csv'), sep=';')
 
 mean_list = []
 std_list = []
@@ -57,11 +57,11 @@ for i in range (0, len(df.columns), 2):
 	# Extract JOBS
 	x = pd.DataFrame(df.iloc[:, i+1])
 	x = x.dropna()
-	jobs = x.values
+	jobs = x.values[:-1]
 
 	# Compute mean and std
-	[mean, std] = weighted_avg_and_std(jobs[:-1], weights)
-	conf_int = compute_confidence_interval(0.01, std, len(jobs) - 1)
+	[mean, std] = weighted_avg_and_std(jobs, weights)
+	conf_int = compute_confidence_interval(0.01, std, len(jobs))
 	mean_list.append(mean)
 	std_list.append(std)
 	conf_list.append(conf_int)
@@ -71,4 +71,4 @@ csv_data['mean'] = mean_list
 csv_data['std'] = std_list
 csv_data['conf_int'] = conf_list
 data = pd.DataFrame(data=csv_data)
-data.to_csv(os.path.join(os.path.dirname(__file__), "data.csv"), sep=';')
+data.to_csv(os.path.join(os.path.dirname(__file__), "output.csv"), sep=';')
