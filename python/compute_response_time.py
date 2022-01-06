@@ -4,16 +4,15 @@ from scipy.stats import norm
 import math
 import os.path
 
-def weighted_avg_and_std(values, weights):
+def compute_avg_and_std(values):
     """
-    Return the weighted average and standard deviation.
+    Return the mean and standard deviation.
 
     values, weights -- Numpy ndarrays with the same shape.
     """
-    average = np.average(values, weights=weights)
-    # Fast and numerically precise:
-    variance = np.average((values-average)**2, weights=weights)
-    return (average, math.sqrt(variance))
+    mean = np.mean(values)
+    variance = np.mean((values - mean)**2)
+    return (mean, math.sqrt(variance))
 
 
 def compute_confidence_interval(alpha, std, size):
@@ -39,28 +38,13 @@ conf_list = []
 for i in range (0, len(df.columns), 2):
 	print("i: " + str(i/2))
 
-	# Extract TIMESTAMPS
-	x = pd.DataFrame(df.iloc[:, i])
-	x = x.dropna()
-	time = x.values
-
-	time_period = time[-1] - time[0]
-	weights = []
-	
-	# Calculate weights
-	for j in range(len(time) - 1):
-		weights.append((time[j+1] - time[j]) / time_period)
-
-	# Convert weights to nparray
-	weights = np.asarray(weights)
-
 	# Extract JOBS
 	x = pd.DataFrame(df.iloc[:, i+1])
 	x = x.dropna()
-	jobs = x.values[:-1]
+	jobs = x.values
 
 	# Compute mean and std
-	[mean, std] = weighted_avg_and_std(jobs, weights)
+	[mean, std] = compute_avg_and_std(jobs)
 	conf_int = compute_confidence_interval(0.05, std, len(jobs))
 	mean_list.append(mean)
 	std_list.append(std)
