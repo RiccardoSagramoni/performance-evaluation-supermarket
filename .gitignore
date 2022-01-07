@@ -41,3 +41,4 @@ supermarket/.settings/
 **/results/
 *.anf
 *.csv
+supermarket/.computed/
