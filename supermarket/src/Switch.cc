@@ -62,17 +62,22 @@ void Switch::handleMessage(cMessage* msg)
     }
 
     // Select of the right till, using the threshold parameter
-    if (service_time <= quick_checkout_threshold) { // Quick tills
+    if (!quick_tills.empty() && service_time <= quick_checkout_threshold) { 
+        // Quick tills
         handle_quick_cart(msg);
     }
-    else {
-        if (!standard_tills.empty()) { // Standard tills
+    else if (!standard_tills.empty()) { 
+        // Standard tills
             handle_standard_cart(msg);
-        }
-        else { // Scenario with no standard tills
-            if (logging) EV << "SWITCH: cart dropped" << endl;
-            delete msg;
-        }
+    }
+    else if (service_time > quick_checkout_threshold) {
+        // Only quick tills and we received a standard cart
+        if (logging) EV << "SWITCH: cart dropped" << endl;
+        delete msg;
+    }
+    else {
+        // Error: no tills 
+        error("SWITCH: no till allocated");
     }
 }
 
