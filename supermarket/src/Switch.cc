@@ -185,7 +185,7 @@ unsigned int Switch::select_till_for_standard_cart ()
 unsigned int Switch::select_till_for_quick_cart (bool& is_quick_till)
 {
     if (standard_tills.empty() && quick_tills.empty()) {
-        error("selectTill(): vect can't be empty");
+        error("selectTill(): tills can't be 0 for both types of tills");
     }
 
     if (par("optimized_routing")) {
@@ -206,10 +206,14 @@ unsigned int Switch::select_till_for_quick_cart (bool& is_quick_till)
                 find_till_with_min_number_of_jobs(quick_tills, value_best_quick_till);
 
         // Choose the best result overall
-        is_quick_till = (value_best_quick_till <= value_best_standard_till);
+        if (index_best_quick_till == -1) { //no quick tills, go for standard ones
+            is_quick_till=false;
+        }
+        else{
+            is_quick_till = (value_best_quick_till <= value_best_standard_till);
+        }
         unsigned int selected_index =
                 ( is_quick_till ? index_best_quick_till : index_best_standard_till );
-
         if(logging) {
             EV << "Select till for a quick cart: till type ";
             if (is_quick_till) {
@@ -242,17 +246,17 @@ unsigned int Switch::select_till_for_quick_cart (bool& is_quick_till)
 }
 
 /**
- * Given a vector of tills, find the one with the minimum number of jobs.
+ * Given a vector of tills, find the one with the minimum number of jobs. If the are no tills of that type it returns -1.
  *
  * @param vect vector of tills
  * @param value return the number of jobs of the selected till
  *
  * @return the index of the selected till
  */
-unsigned int Switch::find_till_with_min_number_of_jobs (const vector<Till*>& vect, unsigned int& value)
+int Switch::find_till_with_min_number_of_jobs (const std::vector<Till*>& vect, unsigned int& value)
 {
     if (vect.empty()) {
-        throw new invalid_argument();
+        return -1;
     }
 
     unsigned int min_jobs = vect[0]->get_number_of_jobs();
