@@ -58,9 +58,6 @@ for i in range (0, len(df.columns), 2):
 	this_df.columns = ['time ' + index, 'mean ' + index, 'variance ' + index]
 	result_df = pandas.concat([result_df, this_df], axis=1)
 
-	if (i > 2):
-		break
-
 
 ## Export result
 result_df.to_csv(os.path.join(os.path.dirname(__file__), "output.csv"), sep=';')
