@@ -28,20 +28,20 @@ def compute_confidence_interval(alpha, std, size):
     return std * norm.ppf(1 - alpha / 2) / np.sqrt(size)
 
 
-df = pd.read_csv(os.path.join(os.path.dirname(__file__), "./../supermarket/try_for_python.csv"), sep=';')
+df = pd.read_csv(os.path.join(os.path.dirname(__file__), "./../supermarket/prova_2.csv"), sep=';')
 total_jobs = pd.DataFrame()
 mean_list=[]
 std_list=[]
 conf_list=[]
+values=[]
+total_jobs=pd.DataFrame(data=[])
 for i in range(0, len(df.columns), 2):
     print("i: " + str(i / 2))
-    if i==0:
-        total_jobs = pd.DataFrame(pd.DataFrame(df.iloc[:, i + 1]))
-    else:
-        total_jobs.append(pd.DataFrame(df.iloc[:, i + 1]))
+    values = values + df.iloc[:, i+1].values.tolist()
 
 # Compute mean and std
-total_jobs.dropna()
+total_jobs = pd.DataFrame(values)
+total_jobs = total_jobs.dropna()
 [mean, std] = compute_avg_and_std(total_jobs.values)
 conf_int = compute_confidence_interval(0.01, std, len(total_jobs))
 mean_list.append(mean)
