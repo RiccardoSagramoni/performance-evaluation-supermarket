@@ -13,7 +13,7 @@ void ExternalWorld::initialize()
     service_distribution = par("service_distribution");
 
     if (arrival_mean < 0 || service_mean < 0 || service_std_deviation < 0) {
-        error("initialize(): impossible distribution parameters");
+        error("initialize(): negative distribution parameters, expected positive values");
     }
 
     // Log current distribution
