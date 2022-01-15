@@ -15,5 +15,14 @@ if (rho >= 1):
 	print('Error: rho >= 1 (' + str(rho) + ')')
 	exit()
 
+print('rho: ' + str(rho))
+
 E_N = rho + (rho**2 + arrival_rate**2 * service_var) / (2 * (1 - rho))
+E_Nq = E_N - rho
+E_R = E_N / arrival_rate
+E_W = E_R - service_mean
+
 print('Mean number of jobs: ' + str(E_N))
+print('Mean number of jobs in the queue: ' + str(E_Nq))
+print('Mean response time: ' + str(E_R))
+print('Mean waiting time: ' + str(E_W))

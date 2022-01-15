@@ -1,6 +1,8 @@
 #ifndef __SUPERMARKET_SWITCH_H_
 #define __SUPERMARKET_SWITCH_H_
 
+#include <exception>
+#include <limits>
 #include <omnetpp.h>
 #include <vector>
 #include <tgmath.h>
@@ -26,7 +28,11 @@ class Switch : public cSimpleModule
     std::vector<Till*> standard_tills;
 
     // Methods
-    unsigned int selectTill(const std::vector<Till*>& vect);
+    void handle_standard_cart (cMessage* msg);
+    void handle_quick_cart (cMessage* msg);
+    unsigned int select_till_for_standard_cart ();
+    unsigned int select_till_for_quick_cart (bool& is_quick_till);
+    unsigned int find_till_with_min_number_of_jobs (const std::vector<Till*>& vect, unsigned int& value);
 
 protected:
     virtual void initialize();
