@@ -5,7 +5,7 @@ import math
 import os.path
 import sys
 
-df = pd.read_csv(os.path.join(os.path.dirname(__file__), "./../supermarket/prova_2.csv"), sep=';')
+df = pd.read_csv(os.path.join(os.path.dirname(__file__), "./../supermarket/2kr/P=-1_K=-1_AM=-1_SM=-1/response_time.csv"), sep=';')
 # one set of values for each repeat
 reps_values = [[], [], [], [], []]
 first = [0, 0, 0, 0, 0]
@@ -41,13 +41,13 @@ for i in range(0, len(df.columns), 2):
     if df.columns[i].find("#0") != -1:
         reps_values[0] = reps_values[0] + df.iloc[:, i + 1].values.tolist()
     elif df.columns[i].find("#1") != -1:
-        reps_values[1] = reps_values[0] + df.iloc[:, i + 1].values.tolist()
+        reps_values[1] = reps_values[1] + df.iloc[:, i + 1].values.tolist()
     elif df.columns[i].find("#2") != -1:
-        reps_values[2] = reps_values[0] + df.iloc[:, i + 1].values.tolist()
+        reps_values[2] = reps_values[2] + df.iloc[:, i + 1].values.tolist()
     elif df.columns[i].find("#3") != -1:
-        reps_values[3] = reps_values[0] + df.iloc[:, i + 1].values.tolist()
+        reps_values[3] = reps_values[3] + df.iloc[:, i + 1].values.tolist()
     elif df.columns[i].find("#4") != -1:
-        reps_values[4] = reps_values[0] + df.iloc[:, i + 1].values.tolist()
+        reps_values[4] = reps_values[4] + df.iloc[:, i + 1].values.tolist()
     else:
         sys.exit("error")
 
@@ -70,4 +70,4 @@ csv_data["std"] = std_list
 csv_data["conf_int"] = conf_list
 data = pd.DataFrame(data=csv_data)
 data.to_csv(os.path.join(os.path.dirname(__file__),
-                         "./../supermarket/prova2_out.csv"), sep=';')
+                         "./../supermarket/2kr/P=-1_K=-1_AM=-1_SM=-1/response_time_out.csv"), sep=';')
