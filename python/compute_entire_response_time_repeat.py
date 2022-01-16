@@ -5,13 +5,6 @@ import math
 import os.path
 import sys
 
-# one set of values for each repeat
-reps_values = [[], [], [], [], []]
-first = [0, 0, 0, 0, 0]
-mean_list = []
-conf_list = []
-std_list = []
-
 
 def compute_avg_and_std(values):
     """
@@ -40,6 +33,12 @@ directory_contents = os.listdir("./../supermarket/2kr")
 
 for h in range(len(directory_contents)):
     for z in range(0, 2):
+        # one set of values for each repeat
+        reps_values = [[], [], [], [], []]
+        first = [0, 0, 0, 0, 0]
+        mean_list = []
+        conf_list = []
+        std_list = []
         df = pd.read_csv(os.path.join(os.path.dirname(__file__), "./../supermarket/2kr/"+directory_contents[h]+"/"+FILE[z]+".csv"), sep=';')
         for i in range(0, len(df.columns), 2):
             if df.columns[i].find("#0") != -1:
