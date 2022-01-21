@@ -32,40 +32,54 @@ def compute_confidence_interval(alpha, std, size):
 
 # Compute the mean response time for 5 replicas
 def execute (input, input_folder, output, output_folder):
-	df = pd.read_csv(os.path.join(input_folder, input), sep=';')
 	mean_list=[]
-	std_list=[]
 	conf_list=[]
 	values=[]
+	reps_values = [[], [], [], [], []]
 
-	total_jobs=pd.DataFrame(data=[])
+	df = pd.read_csv(os.path.join(input_folder, input), sep=';')
+
+	# Divide the columns in 5 "buckets", one for each replica
 	for i in range(0, len(df.columns), 2):
-		#print("i: " + str(i / 2))
-		values = values + df.iloc[:, i+1].values.tolist()
-
-	# Compute mean and std
-	total_jobs = pd.DataFrame(values)
-	total_jobs = total_jobs.dropna()
-	[mean, std] = compute_avg_and_std(total_jobs.values)
-	conf_int = compute_confidence_interval(0.05, std, len(total_jobs))
-	mean_list.append(mean)
-	std_list.append(std)
-	conf_list.append(conf_int)
-
+		if df.columns[i].find("#0") != -1:
+			reps_values[0] = reps_values[0] + df.iloc[:, i + 1].values.tolist()
+		elif df.columns[i].find("#1") != -1:
+			reps_values[1] = reps_values[1] + df.iloc[:, i + 1].values.tolist()
+		elif df.columns[i].find("#2") != -1:
+			reps_values[2] = reps_values[2] + df.iloc[:, i + 1].values.tolist()
+		elif df.columns[i].find("#3") != -1:
+			reps_values[3] = reps_values[3] + df.iloc[:, i + 1].values.tolist()
+		elif df.columns[i].find("#4") != -1:
+			reps_values[4] = reps_values[4] + df.iloc[:, i + 1].values.tolist()
+		else:
+			exit("error")
 
 	csv_data = {}
-	csv_data['mean'] = mean_list
-	csv_data['std'] = std_list
-	csv_data['conf_int'] = conf_list
+	total_jobs = [pd.DataFrame(reps_values[0]), pd.DataFrame(reps_values[1]), pd.DataFrame(reps_values[2]),
+				pd.DataFrame(reps_values[3]), pd.DataFrame(reps_values[4])]
+
+	# Compute the mean for each repetition/replica
+	for i in range(0, 5):
+		total_jobs[i] = total_jobs[i].dropna()
+		[mean, std] = compute_avg_and_std(total_jobs[i].values)
+		conf_int = compute_confidence_interval(0.05, std, len(total_jobs[i]))
+		mean_list.append(mean)
+		conf_list.append(conf_int)
+
+	mean_df = pd.DataFrame(mean_list)
+	final_mean = mean_df.mean()
+
+	csv_data = {}
+	csv_data['mean'] = final_mean
 	data = pd.DataFrame(data=csv_data)
-	data.to_csv(os.path.join(output_folder, output), sep=';')
+	data.to_csv(os.path.join(output_folder, output), sep=';', index=False)
 ## end
 
 
 PREFIX = ""
 SUFFIX = ".csv"
-INPUT_FOLDER = "mid"
-OUTPUT_FOLDER = "output"
+INPUT_FOLDER = "low"
+OUTPUT_FOLDER = "output_" + INPUT_FOLDER
 
 # Change execution directory to the one with the .py file
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
@@ -80,5 +94,3 @@ for filename in os.listdir(INPUT_FOLDER):
 	print(filename)
 	execute(filename, INPUT_FOLDER, 'output-' + name + '.csv', OUTPUT_FOLDER)
 ## end for
-
-#merge_csv(OUTPUT_FOLDER)
