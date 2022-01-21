@@ -58,31 +58,8 @@ def execute (input, input_folder, output, output_folder):
 	csv_data['std'] = std_list
 	csv_data['conf_int'] = conf_list
 	data = pd.DataFrame(data=csv_data)
-	data.to_csv(os.path.join(output_folder, output), sep=',')
+	data.to_csv(os.path.join(output_folder, output), sep=';')
 ## end
-
-
-# Merge the generated csv in a single one, in order to simplify
-# the analysis on Excel
-def merge_csv (folder):
-	i = 0
-	data_list = []
-
-	# Create a list with all the "mean" columns
-	for filename in os.listdir(folder):
-		if not filename.endswith('.csv'):
-			continue
-		
-		this_data = pd.read_csv(os.path.join(folder, filename), sep=';')
-		this_data = this_data.drop(this_data.columns[0], axis=1)
-		this_data.columns = [filename.removeprefix('output-').removesuffix('.csv')]
-		data_list.append(this_data)
-	## end for
-	
-	# Concatenate the extracted columns
-	data = pd.concat(data_list, axis = 1)
-	
-	data.to_csv('output.csv', sep=';')
 
 
 PREFIX = ""
