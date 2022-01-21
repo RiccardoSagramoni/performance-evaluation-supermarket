@@ -9,7 +9,6 @@ Created on Sat Jan 12 06:56:16 2019
 
 import os
 import glob
-from telnetlib import OUTMRK
 import pandas as pd
 
 OUTPUT_FOLDER = 'output_low' #edit!

@@ -32,45 +32,44 @@ def compute_confidence_interval(alpha, std, size):
 
 # Compute the mean response time for 5 replicas
 def execute (input, input_folder, output, output_folder):
+    NUMBER_OF_REPLICAS = 35
 	mean_list=[]
-	conf_list=[]
-	values=[]
-	reps_values = [[], [], [], [], []]
+	reps_values = [[] for i in range(0,NUMBER_OF_REPLICAS)]
 
 	df = pd.read_csv(os.path.join(input_folder, input), sep=';')
 
 	# Divide the columns in 5 "buckets", one for each replica
 	for i in range(0, len(df.columns), 2):
-		if df.columns[i].find("#0") != -1:
-			reps_values[0] = reps_values[0] + df.iloc[:, i + 1].values.tolist()
-		elif df.columns[i].find("#1") != -1:
-			reps_values[1] = reps_values[1] + df.iloc[:, i + 1].values.tolist()
-		elif df.columns[i].find("#2") != -1:
-			reps_values[2] = reps_values[2] + df.iloc[:, i + 1].values.tolist()
-		elif df.columns[i].find("#3") != -1:
-			reps_values[3] = reps_values[3] + df.iloc[:, i + 1].values.tolist()
-		elif df.columns[i].find("#4") != -1:
-			reps_values[4] = reps_values[4] + df.iloc[:, i + 1].values.tolist()
-		else:
-			exit("error")
+		for r in range(0, NUMBER_OF_REPLICAS):
+			if df.columns[i].find('#' + str(r) + ' ') != -1:
+				reps_values[r] = reps_values[r] + df.iloc[:, i + 1].values.tolist()
+				break
+			##end if
+		##end for
+	##end for
 
 	csv_data = {}
-	total_jobs = [pd.DataFrame(reps_values[0]), pd.DataFrame(reps_values[1]), pd.DataFrame(reps_values[2]),
-				pd.DataFrame(reps_values[3]), pd.DataFrame(reps_values[4])]
+
+	total_jobs = []
+	for v in reps_values:
+		total_jobs.append(pd.DataFrame(v))
 
 	# Compute the mean for each repetition/replica
-	for i in range(0, 5):
+	for i in range(0, len(total_jobs)):
 		total_jobs[i] = total_jobs[i].dropna()
 		[mean, std] = compute_avg_and_std(total_jobs[i].values)
-		conf_int = compute_confidence_interval(0.05, std, len(total_jobs[i]))
+		#conf_int = compute_confidence_interval(0.05, std, len(total_jobs[i]))
 		mean_list.append(mean)
-		conf_list.append(conf_int)
+		#conf_list.append(conf_int)
+	## end for
 
 	mean_df = pd.DataFrame(mean_list)
 	final_mean = mean_df.mean()
+	final_conf_int = compute_confidence_interval(0.05, mean_df.std(axis=0), len(mean_df))
 
 	csv_data = {}
 	csv_data['mean'] = final_mean
+	csv_data['conf_int'] = final_conf_int
 	data = pd.DataFrame(data=csv_data)
 	data.to_csv(os.path.join(output_folder, output), sep=';', index=False)
 ## end
