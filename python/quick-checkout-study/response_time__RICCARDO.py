@@ -32,40 +32,53 @@ def compute_confidence_interval(alpha, std, size):
 
 # Compute the mean response time for 5 replicas
 def execute (input, input_folder, output, output_folder):
-	df = pd.read_csv(os.path.join(input_folder, input), sep=';')
+    NUMBER_OF_REPLICAS = 35
 	mean_list=[]
-	std_list=[]
-	conf_list=[]
-	values=[]
+	reps_values = [[] for i in range(0,NUMBER_OF_REPLICAS)]
 
-	total_jobs=pd.DataFrame(data=[])
+	df = pd.read_csv(os.path.join(input_folder, input), sep=';')
+
+	# Divide the columns in 5 "buckets", one for each replica
 	for i in range(0, len(df.columns), 2):
-		#print("i: " + str(i / 2))
-		values = values + df.iloc[:, i+1].values.tolist()
-
-	# Compute mean and std
-	total_jobs = pd.DataFrame(values)
-	total_jobs = total_jobs.dropna()
-	[mean, std] = compute_avg_and_std(total_jobs.values)
-	conf_int = compute_confidence_interval(0.05, std, len(total_jobs))
-	mean_list.append(mean)
-	std_list.append(std)
-	conf_list.append(conf_int)
-
+		for r in range(0, NUMBER_OF_REPLICAS):
+			if df.columns[i].find('#' + str(r) + ' ') != -1:
+				reps_values[r] = reps_values[r] + df.iloc[:, i + 1].values.tolist()
+				break
+			##end if
+		##end for
+	##end for
 
 	csv_data = {}
-	csv_data['mean'] = mean_list
-	csv_data['std'] = std_list
-	csv_data['conf_int'] = conf_list
+
+	total_jobs = []
+	for v in reps_values:
+		total_jobs.append(pd.DataFrame(v))
+
+	# Compute the mean for each repetition/replica
+	for i in range(0, len(total_jobs)):
+		total_jobs[i] = total_jobs[i].dropna()
+		[mean, std] = compute_avg_and_std(total_jobs[i].values)
+		#conf_int = compute_confidence_interval(0.05, std, len(total_jobs[i]))
+		mean_list.append(mean)
+		#conf_list.append(conf_int)
+	## end for
+
+	mean_df = pd.DataFrame(mean_list)
+	final_mean = mean_df.mean()
+	final_conf_int = compute_confidence_interval(0.05, mean_df.std(axis=0), len(mean_df))
+
+	csv_data = {}
+	csv_data['mean'] = final_mean
+	csv_data['conf_int'] = final_conf_int
 	data = pd.DataFrame(data=csv_data)
-	data.to_csv(os.path.join(output_folder, output), sep=';')
+	data.to_csv(os.path.join(output_folder, output), sep=';', index=False)
 ## end
 
 
 PREFIX = ""
 SUFFIX = ".csv"
-INPUT_FOLDER = "mid"
-OUTPUT_FOLDER = "output"
+INPUT_FOLDER = "low"
+OUTPUT_FOLDER = "output_" + INPUT_FOLDER
 
 # Change execution directory to the one with the .py file
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
@@ -80,5 +93,3 @@ for filename in os.listdir(INPUT_FOLDER):
 	print(filename)
 	execute(filename, INPUT_FOLDER, 'output-' + name + '.csv', OUTPUT_FOLDER)
 ## end for
-
-#merge_csv(OUTPUT_FOLDER)
