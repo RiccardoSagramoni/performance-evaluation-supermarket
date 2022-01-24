@@ -6,33 +6,33 @@ import math
 from scipy.stats import norm
 
 def compute_avg_and_std(values):
-    """
-    Return the mean and standard deviation.
+	"""
+	Return the mean and standard deviation.
 
-    values, weights -- Numpy ndarrays with the same shape.
-    """
-    mean = np.mean(values)
-    variance = np.mean((values - mean) ** 2)
-    return (mean, math.sqrt(variance))
+	values, weights -- Numpy ndarrays with the same shape.
+	"""
+	mean = np.mean(values)
+	variance = np.mean((values - mean) ** 2)
+	return (mean, math.sqrt(variance))
 
 
 
 def compute_confidence_interval(alpha, std, size):
-    """
-    Returns the confidence interval for a population mean, using a normal distribution.
+	"""
+	Returns the confidence interval for a population mean, using a normal distribution.
 
-    Args:
-        alpha: The significance level used to compute the confidence level. The confidence level equals 100*(1 - alpha)%, or in other words, an alpha of 0.05 indicates a 95% confidence level.
-        std: The population standard deviation for the data range and is assumed to be known.
-        size: The sample size
-    """
-    return std * norm.ppf(1 - alpha / 2) / np.sqrt(size)
+	Args:
+		alpha: The significance level used to compute the confidence level. The confidence level equals 100*(1 - alpha)%, or in other words, an alpha of 0.05 indicates a 95% confidence level.
+		std: The population standard deviation for the data range and is assumed to be known.
+		size: The sample size
+	"""
+	return std * norm.ppf(1 - alpha / 2) / np.sqrt(size)
 
 
 
 # Compute the mean response time for 5 replicas
 def execute (input, input_folder, output, output_folder):
-    NUMBER_OF_REPLICAS = 35
+	NUMBER_OF_REPLICAS = 35
 	mean_list=[]
 	reps_values = [[] for i in range(0,NUMBER_OF_REPLICAS)]
 
