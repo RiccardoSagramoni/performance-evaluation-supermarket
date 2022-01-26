@@ -42,3 +42,4 @@ supermarket/.settings/
 *.anf
 *.csv
 supermarket/.computed/
+supermarket/simulations/.cmdenv-log
